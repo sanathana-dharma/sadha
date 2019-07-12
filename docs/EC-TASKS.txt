@@ -1,0 +1,56 @@
+PENDING Tasks as on Nov 30th, 2014
+=====================================
+
+ACCOUNT MODEL
+- In this mode, we need to store the member_id of the member who is Account Admin for this account, so lets call that field as "account_admin_member_id", so please remove account_admin field here.
+
+
+ACCOUNTS DETAIL
+- The page header is hard coded with "ABC School" it must display the selected "Account Name"
+- Under Account Admin column, we need to display Account Admin Member Name (not mobile number) and when clicked, it should goto Account detail of that Account
+- Under Groups section, the count for "Total members" is pending
+- Under "Account info" section, Account Admin should be "Member name" not mobile number
+
+GROUP MODEL
+- Here the group_admin must be group_admin_member_id (same like account model)
+- Same with group_moderator1... it must be group_moderator1_member_id etc.
+
+
+GROUPS LIST
+- Account Name is missing
+- Total members count is missing
+ 
+GROUP DETAIL
+- The page header must be "Group Details: <Group Name>"
+- Group Admin must be Member Name, not mobile number
+- 
+
+GROUP MEMBERSHIP
+- In the database, the membership model is very very important. I think we will have 5 times more number of membership records than member records. So we must keep it very light and low maintenance. So my suggestion is that we remove the fields such as "account_name", "group_name"
+Ideally, we must only have these fields: 
+group_id, member_id, membership_status,role
+Using group_id, we must fetch the Account name when it is required.
+
+- For the field "role", please use numbers instead of names like Group Moderator etc. So 1 = Group Admin, 2 = Group Moderator, 0 = Member. In future we can add 3,4,5 etc if required.
+
+MEMBER ADD
+- We need to add a calendar control for date picker for date of birth field in member add screen.
+- We should not allow creation of a new member with X as their primary mobile number, if we already have another member with X as their primary mobile number. This validation is missing now.
+
+
+MEMBER DETAIL
+- The page header must be "Member Details: <Member Name>"
+
+
+
+GENERAL
+- Pagination in all screens
+- [KIRAN] Remove Hyperlink to all unwanted field values 
+- In database, for all status fields, lets use numbers to denote the value, instead of string such as active/Inactive etc. So 0 = Inactive, 1=Active (default)
+
+
+
+
+
+
+

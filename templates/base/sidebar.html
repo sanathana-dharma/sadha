@@ -1,0 +1,12 @@
+{% set navigation_bar = [
+                    ('/', 'home', 'Home'),
+                    ('/main/categories', 'categories', 'Categories'),
+                    ('/main/member_list', 'Sentences', 'Sentences')
+] %}
+
+<ul class="nav nav-stacked nav-pills">
+{% for href, id, caption in navigation_bar %}
+  <li{% if id == active_page %} class="active"{% endif
+  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+{% endfor %}
+</ul>

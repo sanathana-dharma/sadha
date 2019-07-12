@@ -1,0 +1,10 @@
+http://www.kookoo.in
+
+Username: easyconnect
+pwd: easy555
+API Key: KKb9c29f33223d0fcbf914af8c7ccca3ab
+
+Sample URL to make outbound call & forward response to a URL
+http://www.kookoo.in/outbound/outbound.php?phone_no=9535332326&api_key=KKb9c29f33223d0fcbf914af8c7ccca3ab&outbound_version=2&url=induj-easyconnect2.appspot.com/ivr
+
+Note: For detailed log of what is happening after call is dialled, look under LOGS tab in Kookoo Account after login.

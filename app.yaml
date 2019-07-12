@@ -1,0 +1,47 @@
+application: sadha-production
+runtime: python27
+version: v1
+api_version: 1
+threadsafe: true
+
+builtins:
+- remote_api: on
+- deferred: on
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /images
+  static_dir: images
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /fonts
+  static_dir: fonts
+  secure: always
+
+- url: /css
+  static_dir: css
+  secure: always
+
+- url: /js
+  static_dir: js
+  secure: always
+
+- url: /main/.*
+  script: web.application
+
+- url: /.*
+  script: web.application
+  secure: always
+
+- url: /admin/.*
+  script: appengine.ext.admin
+  login: admin
+
+libraries:
+  - name: jinja2
+    version: latest
+  - name: webapp2
+    version: "2.5.1"

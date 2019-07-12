@@ -1,0 +1,40 @@
+Main Functions - Psuedo Code
+===============================================
+GROUPS
+add_group (group_name, accountid, group_admin_memberid, group_mod1_memberid, group_mod2_memberid, group_mod3_memberid){
+1. create a new group record with status = Active
+2. Increment account.total_groups count by one
+}
+
+remove_group (group_name, accountid, group_admin_memberid, group_mod1_memberid, group_mod2_memberid, group_mod3_memberid){
+1. Find the group record, else return error "No group found with details provided"
+2. Set group status to "Inactive"
+3. Decrement the account.total_groups count by one
+}
+
+
+MEMBERSHIP 
+
+add_group_membership(groupid, memberid){
+1. Check if this member already has membership record for this group.  For this, search the membership table for a record with status=Active and matches the groupid and memberid provided. If no membership is available, then add a new record to membership table with given details.
+3. Set default value for membership.status = Active
+4. Increment the total members count in the respective group model
+}
+
+remove_group_membership (groupid, membershipid)
+1. Search for a membership record that matches the given groupid and memberid. 
+2. If membership record does not exist, return "Member has no membership to this group."
+3. If membership.status = Inactive, then return "Member has already unsubscribed from this group"
+4. If membership.status = Active, then 
+a) set status="Inactive", 
+b) decrement the total members in the respective group record
+c) return "Added group membership to member"
+}
+
+get_membership_record(groupid, memberid) {
+1. Search for membership records that matches given groupid AND memberid.
+2. Return record or None
+}
+
+
+
