@@ -1,39 +1,19 @@
-ReadMe
+Sanathana Dharma
 ===========
 
-This is EasyConnect code on Git
+Here is a humble attempt to create the most comprehensive library of content related to Sanathana Dharma - the eternal knowledge made available to human kind through timeless Sanskrit scriptures. 
 
 
-How to run tests
-================
-
-```bash
-pip install nose
-pip install nosegae
-pip install mock
-cd to/project/path
-nosetests
-```
-
-Its also possible to automatically run the tests while you update your files
-(useful if you can attach terminal window somewehre and write the code).
-
-```bash
-pip install nosy
-cd to/project/path
-nosy
-```
+License
+===========
+All content and code here is 100% open source based on "The Unlicense" license, which means you can download, use for private or commercial purpose and re-distribute without any kind of copyright or limitations. 
 
 
-To generate a test coverage report:
+Features 
+===========
+To be updated soon.
 
-```bash
-pip install coverage
-nosetests --with-coverage --cover-html --cover-inclusive --cover-erase --cover-html-dir=test_coverage_report
-```
+How to participate?
+===========
+You are welcome to contribute your ideas and expertise, please try out the code and ping me at kiran@suryakiran.com anytime.
 
-The report will be in test_coverage_report folder. Open index.html and see.
-It will include some external modules, you can ignore them.
-
-![image](https://cloud.githubusercontent.com/assets/193864/7063807/4fad3f40-dedc-11e4-9995-999978887656.png)
-![image](https://cloud.githubusercontent.com/assets/193864/7063814/56cfe3a4-dedc-11e4-9b90-9453ff7b73ac.png)
