@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 		//Handle category editing
 		$('#edit-category-btn').click( function() {
-			ajax_post_call('/main/categories/edit', '#edit-category-form');
+			ajax_post_call('/main/categories/edit', '#edit-category-form','/main/categories');
 		});
 
 		//Handle dynamic selectboxes
