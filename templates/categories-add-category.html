@@ -18,7 +18,7 @@
 
 			<!-- FORM -->
 			<form id="add-category-form" class="form-horizontal frm-category" role="form">
-				<!--<input type="hidden" id="parent_category_id" name="parent_category_id" value="">-->
+				<input type="hidden" id="parent_category_id" name="parent_category_id" value="{{parent_category_id}}">
 			<!-- BUTTONS BAR -->
 			<div class="buttons-bar clearfix">
 				<div class="pull-right">
@@ -29,11 +29,31 @@
 			<!-- // BUTTONS BAR -->
 
 
+			<!-- DYNAMIC DROPDOWNS -->
+			<div class="well" id="dynamic_categories">
+				{% if dict_categories %}
+				<p>
+				<select class= "dynamic_category_select" category_id="" id="1" style="width:250px;">
+						<option value="" selected="selected">Select..</option>
+						{% for keys,category in dict_categories.items() %}
+						   <option value="{{category.key.id()}}">{{category.name}}</option>
+						{% endfor %}
+				</select>
+				</p>
+
+				{% else %}
+					No categories defined!
+				{% endif %}
+			</div>
+			<!-- // DYNAMIC DROPDOWNS -->
+
+
+
 			<div class="row">
 				  <div class="form-group">
 				    <label for="" class="col-sm-2 control-label">Parent Category ID:</label>
 				    <div class="col-sm-10">
-							<input type="input" name="parent_category_id" class="form-control" id="parent_category_id" value="{{parent_category_id}}">
+							<input type="input" name="parent_category_name" class="form-control" id="parent_category_name" value="{{parent_category_name}}">
 
 
 							<!--

@@ -9,12 +9,31 @@
 
 			<!-- PAGE HEADER -->
 			<div class="page-header">
-				<h1>
-					Categories
-				</h1>
-				<p><a href="/main/categories/add"> Add root category</a></p>
+				{% if parent_category_id %}
+					<h1>
+					<a href="javascript:history.back();"><img id="ec-back-icon" src="/images/back.png" /></a> {{parent_category_name}}
+					</h1>
+					{% else %}
+					<h1>
+					<a href="javascript:history.back();"><img id="ec-back-icon" src="/images/back.png" /></a> Categories
+					</h1>
+					{% endif %}
 			</div>
 			<!-- end PAGE HEADER -->
+
+			<!-- BUTTONS BAR -->
+
+			<div class="buttons-bar">
+				{% if parent_category_id %}
+						<a href="/main/categories/add?parent_category_id={{ parent_category_id }}"><button class="btn">Add Child Category</button></a>
+				{% else %}
+						<a href="/main/categories/add?parent_category_id="><button class="btn">Add Root Category</button></a>
+				{% endif %}
+
+			</div>
+
+
+			<!-- // BUTTONS BAR -->
 
 
 			<!-- TABLE -->
@@ -46,24 +65,6 @@
 			</div>
 			<!-- // TABLE -->
 
-
-			<!-- DYNAMIC DROPDOWNS -->
-			<div class="well" id="dynamic_categories">
-				{% if dict_categories %}
-				<p>
-				<select class= "dynamic_category_select" category_id="" id="1" style="width:250px;">
-						<option value="" selected="selected">Select..</option>
-						{% for keys,category in dict_categories.items() %}
-						   <option value="{{category.key.id()}}">{{category.name}}</option>
-						{% endfor %}
-				</select>
-				</p>
-
-				{% else %}
-					No categories defined!
-				{% endif %}
-			</div>
-			<!-- // DYNAMIC DROPDOWNS -->
 
 
 {% endblock %}

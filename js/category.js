@@ -1,5 +1,5 @@
 
-function ajax_post_call(url,form_name){
+function ajax_post_call(url,form_name,return_url){
 	$.ajax({
 			url: url,
 			type: 'post',
@@ -7,7 +7,7 @@ function ajax_post_call(url,form_name){
 			data: $(form_name).serialize()
 	}).done(function (data, status, jqXHR) {
 		if (!data.error_msg){
-			 //location.replace(location.origin);
+			 location.replace(return_url);
 		} else {
 			alert(data.error_msg);
 		}
@@ -26,7 +26,7 @@ function ajax_get_call(url){
 			data: {},
 	}).done(function (data, status, jqXHR) {
 		if (!data.error_msg){
-			 //location.replace(location.origin);
+			 location.replace(location.origin);
 			 return 1;
 		} else {
 			alert(data.error_msg);
@@ -43,19 +43,12 @@ function ajax_get_call(url){
 $(document).ready(function() {
 
 		//Load root categories on page load
-		data = ajax_get_call('/main/categories/api/list');
-		alert(data);
-/*
-		if (data != null){
-			//Call was success, so lets use the data fetched
-			alert(data.dict_categories.length);
-		}else{
-			alert("false");
-		}
-*/
+		data = ajax_get_call('/main/categories');
+		//alert(data);
+
 		//Handle category creation
 		$('#add-category-btn').click( function() {
-			ajax_post_call('/main/categories/add', '#add-category-form');
+			ajax_post_call('/main/categories/add', '#add-category-form', '/main/categories');
 		});
 
 		//Handle category editing

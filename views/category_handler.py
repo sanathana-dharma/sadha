@@ -41,13 +41,15 @@ class API_CategoryList(base_handler.BaseHandler):
 # API FOR CATEGORIES
 class CategoryListHandler(base_handler.BaseHandler):
   def get(self):
-	  		#Simply load the HTML Page
-			context = {}
-			self.render_response('categories-list.html',**context)
 
-			'''
 			#get child categories or fetch all categories if no parameter was passed
 			parent_category_id = self.request.get('parent_category_id')
+			if parent_category_id == '' or parent_category_id == ' ':
+				parent_category_id = None
+			else:
+				parent_category = parent_category = models.Category.get_category(parent_category_id)
+				parent_category_name = parent_category.name
+
 			if parent_category_id:
 				#Fetch child categories
 				categories = models.Category.get_child_categories(parent_category_id)
@@ -56,18 +58,29 @@ class CategoryListHandler(base_handler.BaseHandler):
 				categories = models.Category.get_root_categories()
 
 			dict_categories = {}
-			if categories:
-				#Lets package the data and send it out
-				#Render to UI
+			if parent_category_id == None and categories:
+				#displaying root categories
 				for cat in categories:
 					dict_categories[cat.key.id()] = cat
-				#logging.info(dict_categories)
 				context = {'dict_categories': dict_categories}
+				self.render_response('categories-list.html',**context)
+
+			elif parent_category_id and categories:
+				#Displaying child Categories
+				for cat in categories:
+					dict_categories[cat.key.id()] = cat
+				context = {'dict_categories': dict_categories, 'parent_category_id':parent_category_id, 'parent_category_name':parent_category_name}
+				self.render_response('categories-list.html',**context)
+
+			elif parent_category_id and categories == None:
+				#No Child categories exist for selected category
+				context = {'parent_category_id':parent_category_id, 'parent_category_name':parent_category_name}
 				self.render_response('categories-list.html',**context)
 			else:
-				context = {'dict_categories': dict_categories}
+				#No Root categories in db!
+				context = {}
 				self.render_response('categories-list.html',**context)
-			'''
+
 
 
   def post(self):
