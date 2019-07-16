@@ -29,8 +29,8 @@ function dynamic_categories_init(){
 					//	alert(NewHTML);
 						$("#dynamic_categories").append(NewHTML);
 			 }).fail(function (jqXHR,status,err) {
-					alert("Error loading sub categories1.");
-					alert(err);
+					//alert("Error loading sub categories1.");
+					//alert(err);
 			})
 
 }
