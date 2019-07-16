@@ -1,34 +1,28 @@
 {% extends "base/base.html" %}
-{% set active_page = "categories" %}
-
+{% set active_page = "content" %}
 {% block content %}
 			<!-- BREADCRUMB -->
 			<div class="ec-breadcrumb">
-				<span><a href="/main/">Categories</a></span> <span>»&nbsp;</span> <span>Edit Category</span>
+				<span><a href="/main/member_list">Categories</a></span> <span>»&nbsp;</span> <span>Add Category</span>
 			</div>
 			<!-- // BREADCRUMB -->
-
-			<!--  RESPONSE MESSAGE -->
-			<!--  // RESPONSE MESSAGE -->
-
 
 			<!-- PAGE HEADER -->
 			<div class="page-header">
 				<h1>
-					<a href="/main/categories"><img id="ec-back-icon" src="/images/back.png" /></a> Edit Category
+					<a href="/main/categories"><img id="ec-back-icon" src="/images/back.png" /></a> Add Category
 				</h1>
 			</div>
 			<!-- end PAGE HEADER -->
 
 
-		<!-- FORM -->
-			<form id="edit-category-form" class="form-horizontal frm-category" role="form">
-			<input type="hidden" id="category_id" name="category_id" value="{{category_selected_id}}">
-
+			<!-- FORM -->
+			<form id="add-category-form" class="form-horizontal frm-category" role="form">
+				<input type="hidden" id="parent_category_id" name="parent_category_id" value="{{parent_category_id}}">
 			<!-- BUTTONS BAR -->
 			<div class="buttons-bar clearfix">
 				<div class="pull-right">
-				<button type="button" class="btn" id="edit-category-btn">Save changes</button>
+				<button type="button" class="btn" id="add-category-btn">Add Category</button>
 				<a href="/main/"><button type="button" class="btn">Cancel</button></a>
 				</div>
 			</div>
@@ -37,16 +31,16 @@
 
 			<div class="row">
 				  <div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Parent Category:</label>
-						<div class="col-sm-10">
-						{{parent_category_name}}
-						</div>
-				</div>
+				    <label for="" class="col-sm-2 control-label">Parent Category:</label>
+				    <div class="col-sm-10">
+							<p>{{parent_category_name}}</p>
+				    </div>
+				  </div>
 
 				  <div class="form-group">
 				    <label for="category_name" class="col-sm-2 control-label">Category Name</label>
 				    <div class="col-sm-10">
-				      <input type="input" name="category_name_new" class="form-control" id="category_name_new" placeholder="" value="{{category_selected_name}}">
+				      <input type="input" name="category_name" class="form-control" id="category_name" placeholder="">
 				    </div>
 				  </div>
 
@@ -54,11 +48,12 @@
 			</div>
 			<!-- // FORM -->
 			</form>
-
-
 {% endblock %}
+
 {% block extrascript %}
+<script type="text/javascript">var member_data = "";</script>
 <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/category.js"></script>
-{% endblock %}
+<script type="text/javascript" src="/js/content-item.js"></script>
+{% endblock%}

@@ -26,12 +26,20 @@ class BaseHandler(webapp2.RequestHandler):
       udict = {'name':'','logout_link':''}
       if user:
         udict['username'] = user.nickname()
-        udict['logout_link'] = users.create_logout_url('/logout')
+        udict['logout_link'] = users.create_logout_url('/')
+        if user.nickname()== "kiran@suryakiran.com" or user.nickname()== "ritensv@gmail.com":
+          logging.info("Authorized user")
+          context.update(udict)
+          # Renders a template and writes the result to the response.
+          rv = self.jinja2.render_template(_template, **context)
+          self.response.write(rv)
+        else:
+          return self.redirect(users.create_login_url('/'))
+      else:
+        return self.redirect(users.create_login_url('/'))
 
-      context.update(udict)
-      # Renders a template and writes the result to the response.
-      rv = self.jinja2.render_template(_template, **context)
-      self.response.write(rv)
+  def render_template(self, filename, template_args):
+      self.response.write(self.jinja2.render_template(filename, **template_args))
 
 def jinja2_factory(app):
     j = jinja2.Jinja2(app)

@@ -89,8 +89,6 @@ class Category(ndb.Model):
 				logging.info("No categories exist.")
 			return categories
 
-
-
 		@classmethod
 		def add_root_category(cls, name):
 			if not name:
@@ -100,17 +98,11 @@ class Category(ndb.Model):
 			category = category.put()
 			return category
 
-
-
-
-
 		@classmethod
 		def get_category(cls, category_id):
 			logging.info('get_category() category_id ='+str(category_id))
 			category = cls.get_by_id(long(category_id))
 			return category
-
-
 
 		@classmethod
 		def get_categories_pages(cls):
@@ -124,17 +116,65 @@ class Category(ndb.Model):
 			return None
 
 
-
-
-class Sentence(ndb.Model):
-		"""Represents one line Basic building block of a sooktha, sloka etc
+class ContentItem(ndb.Model):
+		"""Represents a Basic building block of a sooktha, sloka etc It could also be a page or entire content of a chapter.
 		Levels examples:
 		Ramayana (ithihasa/grantha/mahakavya)  khand ->  adhyaya ->  sarga ->  sloka
 		Vedas:  samhitha ->   mandala ->  ashtaka  ->  sookta ->  mantra
+		Books: Part 1 -> Chapter X
 
 		"""
 		content = ndb.StringProperty(required=True)
-		sort_order = ndb.IntegerProperty(default=0)
 		category_id = ndb.StringProperty(required=True)
+		sort_order = ndb.IntegerProperty(default=0,required=True)
 		created_time = ndb.DateTimeProperty(auto_now_add=True)
 		updated_time = ndb.DateTimeProperty(auto_now=True)
+
+		@classmethod
+		def add_content_item(cls, content, category_id, sort_order):
+			if not content:
+				logging.error('Please enter valid content!')
+			if not category_id:
+				#Category not selected
+				logging.error('Please select a category')
+			else:
+				#All good, lets create the record
+				logging.info('Creating content item record..')
+				content_item = cls(content=content, category_id=category_id)
+				content_item = content_item.put()
+				logging.info('Done!')
+				return content_item
+
+		@classmethod
+		def edit_content_item(cls, content_item_id, new_content):
+			logging.info('Editing content item %s, with new content=%s', content_item_id, new_content)
+			content_item = cls.get_by_id(long(content_item_id))
+			content_item.content = new_content
+			content_item = content_item.put()
+			logging.info('Done!')
+			return content_item
+
+		@classmethod
+		def get_content_item(cls, content_item_id):
+			logging.info('Fetching single content item, content_item_id =%s', content_item_id)
+			content_item = cls.get_by_id(long(content_item_id))
+			if content_item:
+				return content_item
+			else:
+				logging.info("Invalid content id, cannot fetch content item.")
+				return None
+
+		@classmethod
+		def get_content_items(cls, category_id):
+			logging.info('Feteching all content items for category_id = %s', category_id)
+			if category_id:
+				content_items = cls.query(cls.category_id==str(category_id)).order(cls.sort_order).fetch()
+				if content_items:
+					logging.info("Returning content items..")
+					return categories
+				else:
+					logging.info("No content items exist for category = %s", category_id)
+					return None
+			else:
+				logging.info("Invalid category iD, cannot fetch content items.")
+				return None

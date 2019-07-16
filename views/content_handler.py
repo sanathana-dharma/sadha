@@ -11,11 +11,11 @@ from libs import ndbpager
 from google.appengine.api import users
 import os
 
-# HANDLER FOR CATEGORIES
+# HANDLER FOR CONTENT ITEMS
 
 
 #API for fetching category details
-class API_CategoryList(base_handler.BaseHandler):
+class API_ContentList(base_handler.BaseHandler):
   def get(self):
 			#get child categories or fetch ROOT categories if no parameter was passed
 
@@ -39,51 +39,48 @@ class API_CategoryList(base_handler.BaseHandler):
 					self.response.out.write(json.dumps( {'dict_categories': dict_categories}))
 				else:
 					self.response.out.write(json.dumps( {}))
+				
 
 
-# API FOR CATEGORIES
-class CategoryListHandler(base_handler.BaseHandler):
+
+# API FOR CONTENT ITEMS
+class ContentListHandler(base_handler.BaseHandler):
   def get(self):
 
-			#get child categories or fetch all categories if no parameter was passed
-			parent_category_id = self.request.get('parent_category_id')
-			if parent_category_id == '' or parent_category_id == ' ':
-				parent_category_id = None
-			else:
-				parent_category = parent_category = models.Category.get_category(parent_category_id)
-				parent_category_name = parent_category.name
+			#get content items based on category provided
+			category_id = self.request.get('category_id')
+			if category_id == '' or category_id == ' ':
+				category_id = None
 
-			if parent_category_id:
+			if category_id:
 				#Fetch child categories
 				categories = models.Category.get_child_categories(parent_category_id)
+				#Fetch content items for given category
+				content_items = models.ContentItem.get_content_items(category_id)
 			else:
-				#Fetch all categories
+				#Fetch root categories
 				categories = models.Category.get_root_categories()
 
+
+			dict_content_items = {}
 			dict_categories = {}
-			if parent_category_id == None and categories:
-				#displaying root categories
+			if category_id == None:
+				#Send categories
 				for cat in categories:
 					dict_categories[cat.key.id()] = cat
-				context = {'dict_categories': dict_categories}
-				self.render_response('categories-list.html',**context)
-
-			elif parent_category_id and categories:
-				#Displaying child Categories
-				for cat in categories:
-					dict_categories[cat.key.id()] = cat
-				context = {'dict_categories': dict_categories, 'parent_category_id':parent_category_id, 'parent_category_name':parent_category_name}
-				self.render_response('categories-list.html',**context)
-
-			elif parent_category_id and categories == None:
-				#No Child categories exist for selected category
-				context = {'parent_category_id':parent_category_id, 'parent_category_name':parent_category_name}
-				self.render_response('categories-list.html',**context)
-			else:
-				#No Root categories in db!
+				#No content items in database
 				context = {}
-				self.render_response('categories-list.html',**context)
+				self.render_response('content-list.html',**context)
+			elif content_items:
+				#Send categories
+				for cat in categories:
+					dict_categories[cat.key.id()] = cat
+				#Send content items
+				for c in content_items:
+					dict_content_items[c.key.id()] = c
 
+				context = {'dict_content_items': dict_content_items}
+				self.render_response('content-list.html',**context)
 
 
   def post(self):
@@ -106,7 +103,7 @@ class CategoryListHandler(base_handler.BaseHandler):
 
 
 
-class AddCategoryHandler(base_handler.BaseHandler):
+class AddContentHandler(base_handler.BaseHandler):
 		def get(self):
 			parent_category_id = self.request.get('parent_category_id')
 			if parent_category_id == None or parent_category_id == '':
@@ -136,7 +133,7 @@ class AddCategoryHandler(base_handler.BaseHandler):
 				msg = 'Problem in adding category to database. %s' % str(e)
 			return self.response.out.write(json.dumps({'msg': msg}))
 
-class EditCategoryHandler(base_handler.BaseHandler):
+class EditContentHandler(base_handler.BaseHandler):
 		def get(self):
 			category_id = self.request.get('selected_category_id')
 			msg = ''
