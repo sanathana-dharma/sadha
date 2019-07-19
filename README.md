@@ -21,3 +21,7 @@ How to participate?
 ===========
 You are welcome to contribute your ideas and expertise, please try out the code and ping me at kiran@suryakiran.com anytime.
 
+<img src="markdownmonstericon.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
