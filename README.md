@@ -5,9 +5,6 @@
 
 <hr />
 
-Sanathana Dharma
-===========
-
 Here is a humble attempt to create the most comprehensive library of content related to Sanathana Dharma - the eternal knowledge made available to human kind through timeless Sanskrit scriptures. 
 
 
