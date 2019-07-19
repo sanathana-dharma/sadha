@@ -1,5 +1,5 @@
 <img src="https://github.com/sanathana-dharma/sadha/blob/master/images/logo.png"
-     width="100px"
+     width="300px"
      alt="Sanathana Dharma"
      style="float: left; margin-right: 10px;" />
 
