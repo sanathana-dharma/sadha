@@ -21,7 +21,7 @@ How to participate?
 ===========
 You are welcome to contribute your ideas and expertise, please try out the code and ping me at kiran@suryakiran.com anytime.
 
-<img src="markdownmonstericon.png"
-     alt="Markdown Monster icon"
+<img src="https://github.com/sanathana-dharma/sadha/blob/master/images/logo.png"
+     alt="Sanathana Dharma"
      style="float: left; margin-right: 10px;" />
 
