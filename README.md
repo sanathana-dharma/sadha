@@ -1,8 +1,11 @@
-Sanathana Dharma
-===========
+<img src="https://github.com/sanathana-dharma/sadha/blob/master/images/logo.png"
+     width="500px"
+     alt="Sanathana Dharma"
+     style="float: left; margin-right: 10px;" />
 
-Here is a humble attempt to create the most comprehensive library of content related to Sanathana Dharma - the eternal knowledge made available to human kind through timeless Sanskrit scriptures. 
+<hr />
 
+Sanathana Dharma portal is a humble attempt to create the most comprehensive, sophisticated, freely accessible library of Sanskrit content. 
 
 License
 ===========
@@ -20,4 +23,6 @@ https://github.com/sanathana-dharma/sadha/blob/master/design-mockups/Sanathana-d
 How to participate?
 ===========
 You are welcome to contribute your ideas and expertise, please try out the code and ping me at kiran@suryakiran.com anytime.
+
+
 
