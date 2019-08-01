@@ -1,4 +1,9 @@
-/* Custom styles for EasyConnect */
+/* Custom styles for Sanathana Dharma Portal */
+
+.form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
+padding-top: 0px;
+
+}
 
 .well {
 padding: 15px;

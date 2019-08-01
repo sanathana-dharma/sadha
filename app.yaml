@@ -1,4 +1,4 @@
-application: sadha-production
+application: sadha-staging
 runtime: python27
 version: v1
 api_version: 1

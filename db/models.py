@@ -126,12 +126,12 @@ class ContentItem(ndb.Model):
 		"""
 		content = ndb.StringProperty(required=True)
 		category_id = ndb.StringProperty(required=True)
-		sort_order = ndb.IntegerProperty(default=0,required=True)
+		sort_order = ndb.IntegerProperty()
 		created_time = ndb.DateTimeProperty(auto_now_add=True)
 		updated_time = ndb.DateTimeProperty(auto_now=True)
 
 		@classmethod
-		def add_content_item(cls, content, category_id, sort_order):
+		def add_content_item(cls, content, category_id):
 			if not content:
 				logging.error('Please enter valid content!')
 			if not category_id:
@@ -171,10 +171,24 @@ class ContentItem(ndb.Model):
 				content_items = cls.query(cls.category_id==str(category_id)).order(cls.sort_order).fetch()
 				if content_items:
 					logging.info("Returning content items..")
-					return categories
+					return content_items
 				else:
 					logging.info("No content items exist for category = %s", category_id)
 					return None
 			else:
 				logging.info("Invalid category iD, cannot fetch content items.")
 				return None
+
+		@classmethod
+		def search_word (cls, search_string):
+			print 'select * from ContentItem WHERE %s >= :1 AND %s < :2 order by %s limit 10'%('content','content', 'content')
+			content_items =  ndb.gql(
+			  'select * from ContentItem WHERE %s >= :1 AND %s < :2 order by %s limit 10'%('content','content', 'content'))
+			resultlist = []
+			for ci in content_items:
+			  search_result = {}
+			  search_result['id'] = ci.key.id()
+			  search_result['name'] = ci.content
+			  search_result['phone_no'] = ci.category_id
+			  resultlist.append(search_result)
+			return resultlist

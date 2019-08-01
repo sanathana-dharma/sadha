@@ -3,7 +3,7 @@
 $(document).ready(function() {
 
 		//Load root categories on page load
-		data = ajax_get_call('/main/categories');
+		//ajax_get_call('/main/categories');
 		//alert(data);
 
 		//Handle category creation

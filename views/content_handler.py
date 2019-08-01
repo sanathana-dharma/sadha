@@ -17,29 +17,28 @@ import os
 #API for fetching category details
 class API_ContentList(base_handler.BaseHandler):
   def get(self):
-			#get child categories or fetch ROOT categories if no parameter was passed
+			#Fetch content items for selected category via ajax call
 
-			parent_category_id = self.request.get('parent_category_id')
-			logging.info('parent_category_id= %s',parent_category_id)
-			if parent_category_id:
-				#Fetch child categories
-				logging.info('Fetch child categories..')
-				categories = models.Category.get_child_categories(parent_category_id)
-			else:
-				#Fetch all categories
-				logging.info('Fetch root categories..')
-				categories = models.Category.get_root_categories()
+			category_id = self.request.get('category_id')
+			if category_id == '' or category_id == ' ':
+				category_id = None
+			logging.info('category_id= %s',category_id)
 
-			dict_categories = {}
-			if categories:
+			if category_id:
+				logging.info('Fetch content items..')
+				#Fetch content items
+				content_items = models.ContentItem.get_content_items(category_id)
+
+			dict_content_items = {}
+			if content_items:
 				#Lets package the data and send it out
-				dict_categories = {cat.key.id(): cat.name for cat in categories}
+				dict_content_items = {ci.key.id(): ci.content for ci in content_items}
 				self.response.content_type = 'application/json'
-				if len(dict_categories)>0:
-					self.response.out.write(json.dumps( {'dict_categories': dict_categories}))
+				if len(dict_content_items)>0:
+					self.response.out.write(json.dumps( {'dict_content_items': dict_content_items}))
 				else:
-					self.response.out.write(json.dumps( {}))
-				
+					self.response.out.write(json.dumps( {'dict_content_items': dict_content_items}))
+
 
 
 
@@ -47,6 +46,8 @@ class API_ContentList(base_handler.BaseHandler):
 class ContentListHandler(base_handler.BaseHandler):
   def get(self):
 
+	  		'''
+			#For Dynamic categories - fetch root or child categories
 			#get content items based on category provided
 			category_id = self.request.get('category_id')
 			if category_id == '' or category_id == ' ':
@@ -60,27 +61,24 @@ class ContentListHandler(base_handler.BaseHandler):
 			else:
 				#Fetch root categories
 				categories = models.Category.get_root_categories()
+			'''
 
+			#get content items based on category provided
+			category_id = self.request.get('category_id')
+			if category_id == '' or category_id == ' ':
+				category_id = None
+
+			#Fetch content items
+			content_items = models.ContentItem.get_content_items(category_id)
 
 			dict_content_items = {}
-			dict_categories = {}
-			if category_id == None:
-				#Send categories
-				for cat in categories:
-					dict_categories[cat.key.id()] = cat
-				#No content items in database
-				context = {}
-				self.render_response('content-list.html',**context)
-			elif content_items:
-				#Send categories
-				for cat in categories:
-					dict_categories[cat.key.id()] = cat
+			if content_items:
 				#Send content items
 				for c in content_items:
 					dict_content_items[c.key.id()] = c
 
-				context = {'dict_content_items': dict_content_items}
-				self.render_response('content-list.html',**context)
+			context = {'dict_content_items': dict_content_items}
+			self.render_response('content-list.html',**context)
 
 
   def post(self):
@@ -105,79 +103,59 @@ class ContentListHandler(base_handler.BaseHandler):
 
 class AddContentHandler(base_handler.BaseHandler):
 		def get(self):
-			parent_category_id = self.request.get('parent_category_id')
-			if parent_category_id == None or parent_category_id == '':
-				parent_category_id = ''
-				parent_category_name = ''
-			else:
-				parent_category = models.Category.get_category(parent_category_id)
-				parent_category_name = parent_category.name
-
-			context = {'parent_category_id': parent_category_id, 'parent_category_name': parent_category_name}
-			self.render_response('categories-add-category.html',**context)
+			context = {}
+			self.render_response('content-add.html',**context)
 
 		def post(self):
 			msg = ''
-			category_name = self.request.get('category_name')
-			parent_category_id = self.request.get('parent_category_id')
-			logging.info('category_name=' + category_name)
-			logging.info('parent_category_id=' + parent_category_id)
+			category_id = self.request.get('dyanmic_categories_lastchild_category_id')
+			content = self.request.get('content')
+			logging.info('category_id=' + category_id)
+			logging.info('content=' + content)
 
 			try:
-				category = models.Category.add_category(category_name,parent_category_id)
-				if category:
-					logging.info('Category added succesfully.')
+				content_item = models.ContentItem.add_content_item(content,category_id)
+				if content_item:
+					logging.info('Content item added succesfully.')
 				else:
-					logging.info('Unable to add Category.')
+					logging.info('Unable to add Content.')
 			except Exception as e:
-				msg = 'Problem in adding category to database. %s' % str(e)
+				msg = 'Problem in adding content item to database. %s' % str(e)
 			return self.response.out.write(json.dumps({'msg': msg}))
 
 class EditContentHandler(base_handler.BaseHandler):
 		def get(self):
-			category_id = self.request.get('selected_category_id')
+			content_item_id = self.request.get('content_item_id')
 			msg = ''
-			#try:
-			category_selected = models.Category.get_category(category_id)
-			if category_selected:
-				parent_category = None
-				if category_selected.parent_category_id == None:
-					#This is a Root category, hence no parent exists
-					logging.info('Root category - no parent found!')
-				else:
-					#This is a child category
-					parent_category = models.Category.get_by_id(long(category_selected.parent_category_id))
-					if parent_category:
-						logging.info('Found Parent category')
-					else:
-						logging.error('Invalid Parent category!!')
+
+			content_item = models.ContentItem.get_content_item(content_item_id)
+
+			context = {}
+			if content_item:
+				logging.info('Found content record!')
+				category = models.Category.get_category(content_item.category_id)
+
+				context = {'content': content_item.content, 'category_name': category.name , 'content_item_id' : content_item.key.id()}
 			else:
-				logging.error('Invalid category selected for editing!')
+				logging.error('Invalid content id provided!')
 
-			if parent_category:
-				context = {'category_selected_id': category_selected.key.id(),
-				'category_selected_name': category_selected.name,'parent_category_name': parent_category.name}
-			else:
-				context = {'category_selected_id': category_selected.key.id(),
-				'category_selected_name': category_selected.name,'parent_category_name': 'None'}
-
-			self.render_response('categories-edit-category.html',**context)
-
+			self.render_response('content-edit.html',**context)
 
 		def post(self):
 			msg = ''
-			category_name_new = self.request.get('category_name_new')
-			category_id = self.request.get('category_id')
-			logging.info('category_name_new=' + category_name_new)
-			logging.info('category_id=' + category_id)
+			content_item_id = self.request.get('content_item_id')
+			new_content = self.request.get('content_item_content')
 
-			if not category_name_new:
-				msg = 'Invalid Category name, please try again'
-			if not category_id:
-				msg = msg + ', Invalid Category selected for update.'
+			msg = ''
+			logging.info('content_item_id=' + content_item_id)
+			logging.info('new_content=' + new_content)
+
 			try:
-				models.Category.edit_category(category_id, category_name_new)
-				logging.info('Category updated succesfully.')
+				content_item = models.ContentItem.edit_content_item(content_item_id, new_content)
+				if content_item:
+					logging.info('Content item updated succesfully.')
+				else:
+					logging.info('Unable to update Content.')
 			except Exception as e:
-				msg = 'Problem in updating category to database.%s' % str(e)
-			return self.response.out.write(json.dumps({'error_msg': msg}))
+				msg = 'Problem in updating content item to database. %s' % str(e)
+			return self.response.out.write(json.dumps({'msg': msg}))
