@@ -14,11 +14,7 @@ All content and code here is 100% open source based on "The Unlicense" license, 
 
 Features 
 ===========
-Design Mockup 1: Unlimited Category Management
-https://github.com/sanathana-dharma/sadha/blob/master/design-mockups/Sanathana-dharma-01-category-mgmt.pdf
-
-Design Mockup 2: Content Management
-https://github.com/sanathana-dharma/sadha/blob/master/design-mockups/Sanathana-dharma-02-category-mgmt.pdf
+https://github.com/sanathana-dharma/sadha/issues
 
 How to participate?
 ===========
