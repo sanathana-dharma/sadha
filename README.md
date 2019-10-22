@@ -1,9 +1,3 @@
-<img src="https://github.com/sanathana-dharma/sadha/blob/master/images/logo.png"
-     width="500px"
-     alt="Sanathana Dharma"
-     style="float: left; margin-right: 10px;" />
-
-<hr />
 
 Sanathana Dharma portal is a humble attempt to create the most comprehensive, sophisticated, freely accessible library of Sanskrit content. 
 
