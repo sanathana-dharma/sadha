@@ -1,0 +1,9 @@
+<div class="container-fluid">
+	<span style="padding:15px; float:right;">Language:&nbsp;
+	<select>
+		{% for x in languages: %}
+		<option value={{x}}>{{languages[x]}}</option>
+		{% endfor %}
+	</select>
+	</span>
+</div>

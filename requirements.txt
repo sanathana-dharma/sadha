@@ -1,0 +1,7 @@
+Flask>=1.0.0
+requests>2.21.0
+pyOpenSSL==19.0.0
+Flask-Login==0.4.1
+google-cloud-datastore==1.7.3
+gunicorn==19.9.0
+oauthlib==3.0.1

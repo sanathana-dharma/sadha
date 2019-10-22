@@ -1,0 +1,5 @@
+indexes:
+- kind: Branch
+  properties:
+  - name: branch_parent_id
+  - name: name

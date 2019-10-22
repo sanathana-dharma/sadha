@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sanathana Dharma</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="google-signin-client_id" content="7158413011-1lcd0dv5m5n1p22jcvuk8andtv41njsi.apps.googleusercontent.com">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script>
+				function onSignIn(googleUser) {
+				  var profile = googleUser.getBasicProfile();
+				  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				  console.log('Name: ' + profile.getName());
+				  console.log('Image URL: ' + profile.getImageUrl());
+				  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+					//Notify server of this user
+					var id_token = googleUser.getAuthResponse().id_token;
+					//alert(id_token);
+					var xhr = new XMLHttpRequest();
+					xhr.open('POST', '/dologin');
+					xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					xhr.onload = function() {
+					  console.log('Redirecting to: ' + xhr.responseText);
+						window.location.replace(xhr.responseText);
+					};
+					xhr.send('idtoken=' + id_token);
+
+				}
+
+				function signOut()
+	      {
+	        var auth2 = gapi.auth2.getAuthInstance();
+	        auth2.signOut().then(function () {
+	        console.log('User signed out.');
+	        auth2.disconnect();
+	      });
+	        auth2.disconnect();
+	      }
+
+		</script>
+
+		<style>
+				body {
+					background-color: #eeeeee;
+				}
+				.nav-pills>li.active>a {
+					background-color: inherit;
+					color: #000;
+					border: 2px solid grey;
+				}
+		</style>
+  </head>
+  <body>
+
+
+    <div class="">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="navbar-brand" style="font-weight:bold; font-size:22px; margin-top:10px;">Sanathana Dharma</div>
+					</div>
+        </div>
+      </div>
+    </div>
+
+		<div class="col-md-12">
+
+
+			<div class="container-fluid">
+				<span style="padding:15px; float:right;">
+					<div class="g-signin2" data-onsuccess="onSignIn"></div>
+				</span>
+			</div>
+
+	</div>
+
+
+  </body>
+</html>
