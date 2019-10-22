@@ -1,4 +1,11 @@
 from flask import current_app, Flask, redirect, render_template, request, url_for
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 from google.cloud import datastore
 #from google.appengine.api import users
 
@@ -98,33 +105,44 @@ def get_languagelist():
 	return config.LANGUAGES
 
 
+#Validates if the current logged in user is authorized to access the given url
+#and do appropriate redirect
+def redirect_admin_only():
+	if current_user.is_authenticated:
+		if current_user.email in config.ADMIN_LIST:
+			return redirect("/admin/list/")
+		else:
+			return "Sorry! unauthorized user. <a href='/logout'>Login as a different user</a>"
+
+	else:
+		#di = {}
+		#return render_html("index.html", di)
+		return render_template("index.html")
+
 def render_html(htmlFile, dictVariables):
 	#Append variables for the template that are required globally for all views
+
+	if current_user.is_authenticated:
+		dictVariables.update({"name": current_user.name})
+		dictVariables.update({"email": current_user.email})
+		dictVariables.update({"profile_pic": current_user.profile_pic})
+	else:
+		pass
+
 	#Languages list
 	languages = get_languagelist()
 	dictVariables.update({"languages": languages})
 
 	#Branch path
-	if dictVariables['branch_parent_id']=='0':
-		branch_path = []
-	else:
-		branch_path = get_tree_path(dictVariables['branch_parent_id'])
-	dictVariables.update({"branch_path": branch_path})
+	try:
+		if dictVariables['branch_parent_id']=='0':
+			branch_path = []
+		else:
+			branch_path = get_tree_path(dictVariables['branch_parent_id'])
+		dictVariables.update({"branch_path": branch_path})
+	except:
+		pass
 
-	#User session
-	#user = users.get_current_user()
-	#if user:
-	#    url = users.create_logout_url(self.request.uri)
-	#    url_linktext = 'Logout'
-	#else:
-	#    url = users.create_login_url(self.request.uri)
-	#    url_linktext = 'Login'
-	#
-	#dictVariables.update({
-	#	"user": user,
-	#    'url': url,
-	#    'url_linktext': url_linktext,
-	#})
 
 	#Render template
 	return render_template(htmlFile, **dictVariables)

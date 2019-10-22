@@ -1,4 +1,11 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 import utils
 from treemgr import objects
 mod = Blueprint('treemgr', __name__, template_folder='templates')
@@ -7,8 +14,8 @@ mod = Blueprint('treemgr', __name__, template_folder='templates')
 # [START list]
 @mod.route('/list/', defaults={'branch_parent_id': '0'})
 @mod.route('/list/<branch_parent_id>')
+@login_required
 def list(branch_parent_id):
-
 	if branch_parent_id != '0':
 		#print("Listing child categories of:")
 		#print(branch_parent_id)
@@ -40,6 +47,7 @@ def list(branch_parent_id):
 # [END list]
 
 @mod.route('/viewbranch/<id>')
+@login_required
 def view(id):
 	branch = utils.get_model().read(id)
 
@@ -52,6 +60,7 @@ def view(id):
 # [START add]
 @mod.route('/add/', defaults={'branch_parent_id': None}, methods=['GET', 'POST'])
 @mod.route('/add/<branch_parent_id>', methods=['GET', 'POST'])
+@login_required
 def add(branch_parent_id):
 	if request.method == 'POST':
 		#Identify the parent
@@ -91,6 +100,7 @@ def add(branch_parent_id):
 
 
 @mod.route('/<id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit(id):
 	branch = utils.get_model().read(id)
 
@@ -113,6 +123,7 @@ def edit(id):
 
 
 @mod.route('/<id>/delete')
+@login_required
 def delete(id):
 	#Check if this branch has children, if yes we can't proceed with deletion
 	#User must first delete the children inorder to delete the parent

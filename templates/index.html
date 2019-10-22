@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sanathana Dharma</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<style>
+				body {
+					background-color: #eeeeee;
+				}
+				.nav-pills>li.active>a {
+					background-color: inherit;
+					color: #000;
+					border: 2px solid grey;
+				}
+		</style>
+  </head>
+  <body>
+
+
+    <div class="">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="navbar-brand" style="font-weight:bold; font-size:22px; margin-top:10px;">Sanathana Dharma</div>
+					</div>
+        </div>
+      </div>
+    </div>
+		<div class="col-md-12">
+    <div class="container-fluid well" style="background-color:#fff">
+			{% if name: %}
+			<p>Name =  {{name}} </p>
+			<p>Email =  {{email}} </p>
+			<p>Profile pic = <img src="{{profile_pic}}" /> </p>
+			<p><a class="button" href="/logout">Logout</a></p>
+			{% else %}
+			<a href="/login">Hi there! Please Login to get started!</a>
+			{% endif %}
+    </div>
+	</div>
+
+
+  </body>
+</html>
