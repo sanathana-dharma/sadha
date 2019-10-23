@@ -21,6 +21,8 @@ LANGUAGES = {
 
 ADMIN_LIST = {
 	"kiran@suryakiran.com": "Surya Kiran",
+	"2maxdc@gmail.com": "Carp-Bezverhnii Maxim",
+	"charming30@gmail.com": "Charming Thirty"
 }
 
 #Google oauth credentials

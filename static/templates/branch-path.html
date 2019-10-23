@@ -1,8 +1,6 @@
-<div>
-<span>
-	<a href="/admin/list/">Home</a>
+<a class="breadcrumb-item" href="/admin/list/">Home</a>
 {% for dictItem in branch_path: %}
+<li>
 &nbsp;&nbsp;&rarr;&nbsp;&nbsp;<a href="/admin/list/{{dictItem['id']}}"> {{dictItem['name']}}</a>
+</li>
 {% endfor %}
-</span>
-</div>

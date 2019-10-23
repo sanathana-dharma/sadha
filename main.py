@@ -21,7 +21,7 @@ from utils import render_html
 
 
 # Flask app setup
-app = Flask(__name__)
+app = Flask(__name__, template_folder="static/templates/")
 app.config.from_object(config)
 app.secret_key = config.SECRET_KEY
 app.debug = True
