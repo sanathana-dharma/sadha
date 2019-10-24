@@ -112,3 +112,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+_private/client_secret_7158413011-tsmtcnbqec4dsvn2mjhrad50gouoe039.apps.googleusercontent.com.json
+_private/keys.py
+_private/sanathana-dharma-app-71a9d654e3e3.json

@@ -1,7 +1,5 @@
-{# [START form] #}
-{% set active_page = "catmgr" %}
 {% extends "base.html" %}
-{% block content %}
+{% block page_content %}
 
 {% include "branch-path.html" %}
 <h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;Add Categories
@@ -37,4 +35,3 @@
 </form>
 
 {% endblock %}
-{# [END form] #}

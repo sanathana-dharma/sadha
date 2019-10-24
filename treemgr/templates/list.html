@@ -1,24 +1,21 @@
 {% extends "base.html" %}
-{% set active_page = "catmgr" %}
 {% block page_content %}
 
 
 <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
 
-<h3>{% if branch_parent_id: %}<a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;{% endif %}{{catname}}
+<h3>{% if branch_parent_id: %}<a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;{% endif %}{{catname}}
 {% if branch_parent_id: %}
 	&nbsp;
-	<a href="/admin/{{branch_parent_id}}/edit" class="btn btn-default btn">
-    <i class="glyphicon glyphicon-pencil"></i>
+	<a href="/admin/{{branch_parent_id}}/edit" class="btn btn-primary">
+    Edit
   </a>
-	<a href="/admin/viewbranch/{{branch_parent_id}}" class="btn btn-default btn">
-		<i class="glyphicon glyphicon-info-sign"></i>
+	<a href="/admin/viewbranch/{{branch_parent_id}}" class="btn btn-primary">
+		More details..
  </a>
 {% endif %}
 </h3>
 <hr>
-
-
 
 
 {% for branch in branches %}

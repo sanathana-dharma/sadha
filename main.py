@@ -9,6 +9,7 @@ from flask_login import (
     login_user,
     logout_user,
 )
+from _private import keys
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
@@ -23,7 +24,7 @@ from utils import render_html
 # Flask app setup
 app = Flask(__name__, template_folder="static/templates/")
 app.config.from_object(config)
-app.secret_key = config.SECRET_KEY
+app.secret_key = keys.SECRET_KEY
 app.debug = True
 app.testing = False
 if not app.testing:
@@ -43,7 +44,7 @@ def unauthorized():
     return "You must be logged in to access this content.", 403
 
 # OAuth2 client setup
-client = WebApplicationClient(config.GOOGLE_CLIENT_ID)
+client = WebApplicationClient(keys.GOOGLE_CLIENT_ID)
 
 # Flask-Login helper to retrieve a user from our db
 @login_manager.user_loader
@@ -100,7 +101,7 @@ def callback():
 	    token_url,
 	    headers=headers,
 	    data=body,
-	    auth=(config.GOOGLE_CLIENT_ID, config.GOOGLE_CLIENT_SECRET),
+	    auth=(keys.GOOGLE_CLIENT_ID, keys.GOOGLE_CLIENT_SECRET),
 	)
 
 	# Parse the tokens!
@@ -152,7 +153,7 @@ def logout():
 
 
 def get_google_provider_cfg():
-    return requests.get(config.GOOGLE_DISCOVERY_URL).json()
+    return requests.get(keys.GOOGLE_DISCOVERY_URL).json()
 
 
 if __name__ == "__main__":

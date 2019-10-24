@@ -9,6 +9,7 @@ from flask_login import (
 from google.cloud import datastore
 #from google.appengine.api import users
 
+from _private import keys
 import config
 builtin_list = list
 
@@ -109,14 +110,12 @@ def get_languagelist():
 #and do appropriate redirect
 def redirect_admin_only():
 	if current_user.is_authenticated:
-		if current_user.email in config.ADMIN_LIST:
+		if current_user.email in keys.ADMIN_LIST:
 			return redirect("/admin/list/")
 		else:
 			return "Sorry! unauthorized user. <a href='/logout'>Login as a different user</a>"
 
 	else:
-		#di = {}
-		#return render_html("index.html", di)
 		return render_template("index.html")
 
 def render_html(htmlFile, dictVariables):
