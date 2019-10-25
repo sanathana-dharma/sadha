@@ -11,10 +11,11 @@ import requests
 # Internal imports
 from user import User
 import config
-import treemgr as mod_treemgr
+import treemgr
+import auth
 import utils
 from utils import render_html
-import auth as mod_auth
+
 
 # =========================================================================
 # Flask app setup
@@ -28,7 +29,11 @@ if not app.testing:
 
 # Register the blueprint.
 from treemgr.routes import mod
-app.register_blueprint(mod_treemgr.routes.mod, url_prefix='/admin')
+app.register_blueprint(treemgr.routes.mod, url_prefix='/admin')
+
+from auth.routes import mod2
+app.register_blueprint(auth.routes.mod2, url_prefix='/auth')
+
 
 # User session management setup
 login_manager = LoginManager()
@@ -41,7 +46,18 @@ def load_user(user_id):
 	except:
 		return None
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return "You must be logged in to access this content.", 403
+
 # =========================================================================
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace("http://", "https://", 1)
+        code = 301
+        return redirect(url, code=code)
+
 # Site main entry point
 @app.route("/")
 def index():

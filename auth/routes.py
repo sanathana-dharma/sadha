@@ -1,7 +1,7 @@
 import json
 import os
 import logging
-from flask import Flask, redirect, request, url_for, make_response
+from flask import Blueprint, Flask, redirect, request, url_for, make_response
 from flask_login import (
     LoginManager,
     current_user,
@@ -16,13 +16,15 @@ import requests
 
 # Internal imports
 from user import User
-from main import app, login_manager
+#from main import login_manager
+
+mod2 = Blueprint('auth', __name__)
 
 # =========================================================================
 # OAuth2 client setup
 client = WebApplicationClient(keys.GOOGLE_CLIENT_ID)
 
-@app.route("/login")
+@mod2.route("/login")
 def login():
 	google_provider_cfg = get_google_provider_cfg()
 	authorization_endpoint = google_provider_cfg["authorization_endpoint"]
@@ -34,7 +36,7 @@ def login():
 	return redirect(request_uri)
 
 
-@app.route("/login/callback")
+@mod2.route("/login/callback")
 def callback():
 	code = request.args.get("code")
 	google_provider_cfg = get_google_provider_cfg()
@@ -82,15 +84,13 @@ def callback():
 	return redirect(url_for("index"))
 
 
-@app.route("/logout")
+@mod2.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("index"))
 
-@login_manager.unauthorized_handler
-def unauthorized():
-    return "You must be logged in to access this content.", 403
+
 
 def get_google_provider_cfg():
     return requests.get(keys.GOOGLE_DISCOVERY_URL).json()
