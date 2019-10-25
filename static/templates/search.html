@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.0.0/dist/instantsearch.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/reset-min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/algolia-min.css" >
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/search.css') }}">
+    <title>Search</title>
+  </head>
+  <body>
+    <div class="topbar">
+      <a href="/" class="title">Search</a>
+    </div>
+
+    <div class="wrapper">
+      <div class="left">
+
+        <div id="current-refined-values">
+          <!-- CurrentRefinedValues widget will appear here -->
+        </div>
+
+        <div id="clear-all">
+          <!-- ClearAll widget will appear here -->
+        </div>
+
+        <div id="refinement-list">
+          <!-- RefinementList widget will appear here -->
+        </div>
+      </div>
+
+      <div class="right">
+        <div id="searchbox">
+          <!-- SearchBox widget will appear here -->
+        </div>
+
+        <div id="hits">
+          <!-- Hits widget will appear here -->
+        </div>
+
+        <div id="pagination">
+          <!-- Pagination widget will appear here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- js -->
+		<!-- the following algolia.js file is not pushed / made available on github as it contains API keys -->
+		 <script src="{{url_for('static', filename='js/algolia.js') }}" ></script>
+		<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3.35.0/dist/algoliasearchLite.min.js" ></script>
+		<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@3.4.0/dist/instantsearch.production.min.js" ></script>
+
+    <script src="{{url_for('static', filename='js/search.js') }}"></script>
+  </body>
+</html>
