@@ -112,6 +112,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-private/
+_private/
 _refcode/
 static/js/algolia.js
