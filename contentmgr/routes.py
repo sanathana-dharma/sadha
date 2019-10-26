@@ -40,10 +40,42 @@ def list(branch_id):
 def list_leaves(branch_id):
 		print("Inside content mgr view...")
 		recs = model_datastore.list_leaves(branch_id)
+		branch = model_datastore.read_branch(branch_id)
+
+		di = {}
+
+		lsteng = []
+		lstsan = []
+		lstkan = []
+
+		for x in recs:
+			di = {
+			"leaf_id": x.id,
+			"content_eng": x['content_eng']
+			}
+			lsteng.append(di.copy())
+			di.clear()
+
+			di = {
+			"leaf_id": x.id,
+			"content_san": x['content_san']
+			}
+			lstsan.append(di.copy())
+			di.clear()
+
+			di = {
+			"leaf_id": x.id,
+			"content_kan": x['content_kan']
+			}
+			lstkan.append(di.copy())
+			di.clear()
+
 		#Send output
 		di = {
-		"leaves": recs,
-		"catname": "Branch Name will appear here",
+		"lsteng": lsteng,
+		"lstsan": lstsan,
+		"lstkan": lstkan,
+		"catname": branch['name'],
 		"branch_id": branch_id
 		}
 		return utils.render_html("contentmgr-list.html",di)
@@ -81,13 +113,13 @@ def add(branch_id):
 @mod3.route('/<leaf_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(leaf_id):
-	leaf = model_datastore.read(leaf_id)
+	leaf = model_datastore.read_leaf(leaf_id)
 	branch_id = leaf['branch_id']
 
 	if request.method == 'POST':
 		data = request.form.to_dict(flat=True)
 		leaf = model_datastore.update(data, leaf_id)
-		return redirect(url_for('.view', branch_id=branch_id))
+		return redirect(url_for('.list_leaves', branch_id=branch_id))
 
 	branch={}
 	#Send output
@@ -102,7 +134,7 @@ def edit(leaf_id):
 @mod3.route('/<leaf_id>/delete')
 @login_required
 def delete(leaf_id):
-	leaf = model_datastore.read(leaf_id)
+	leaf = model_datastore.read_leaf(leaf_id)
 	branch_id = leaf['branch_id']
 	model_datastore.delete(leaf_id)
 	return redirect(url_for('.view', branch_id=branch_id))

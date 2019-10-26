@@ -18,12 +18,18 @@ def list_leaves(branch_id):
 
 
 #Returns details of a single leaf
-def read(leaf_id):
+def read_leaf(leaf_id):
     ds = get_client()
     key = ds.key(kind_name, int(leaf_id))
     rec = ds.get(key)
     return from_datastore(rec)
 
+#Returns details of a single branch
+def read_branch(branch_id):
+    ds = get_client()
+    key = ds.key('Branch', int(branch_id))
+    rec = ds.get(key)
+    return from_datastore(rec)
 
 # [START update]
 #Updates content of a single leaf

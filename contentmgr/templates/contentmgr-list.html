@@ -16,12 +16,25 @@
 {% endif %}
 </h3>
 <hr/>
-{% for leaf in leaves %}
-      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_eng}}</a></p>
-      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_san}}</a></p>
-      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_kan}}</a></p>
+{% for eng in lsteng %}
+      <p><a href="/admin/contentmgr/{{eng.leaf_id}}/edit">{{eng.content_eng}}</a></p>
 {% endfor %}
 <hr/>
+
+<hr/>
+{% for san in lstsan %}
+      <p><a href="/admin/contentmgr/{{san.leaf_id}}/edit">{{san.content_san}}</a></p>
+{% endfor %}
+<hr/>
+
+<hr/>
+{% for kan in lstkan %}
+      <p><a href="/admin/contentmgr/{{kan.leaf_id}}/edit">{{kan.content_kan}}</a></p>
+{% endfor %}
+<hr/>
+
+
+
 <a href="/admin/contentmgr/add/{{branch_id}}" class="btn btn-success btn-sm">Add content</a>
 
 {% endblock %}
