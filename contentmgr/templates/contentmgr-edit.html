@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+{% include "branch-path.html" %}
+<h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;Edit Content
+&nbsp;
+	<a href="/admin/{{branch.id}}/delete" class="btn btn-default btn">
+    <i class="glyphicon glyphicon-trash"></i>
+  </a>
+
+</h3>
+
+<form method="POST" enctype="multipart/form-data">
+<input type="hidden" name="branch_id" value="{{branch_id}}" />
+
+  <div class="form-group">
+    <label for="content_eng">Content (English)</label>
+    <textarea name="content_eng" id="content_eng" class="form-control">{{leaf.content_eng}}</textarea>
+  </div>
+
+	<div class="form-group">
+    <label for="content_san">Content (Sanskrit)</label>
+    <textarea name="content_san" id="content_san" class="form-control">{{leaf.content_san}}</textarea>
+  </div>
+
+	<div class="form-group">
+    <label for="content_kan">Content (Kannada)</label>
+    <textarea name="content_kan" id="content_kan" class="form-control">{{leaf.content_kan}}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+{% endblock %}

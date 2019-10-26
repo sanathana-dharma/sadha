@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+
+<a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+
+<h3>{% if branch_id: %}<a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;{% endif %}{{catname}}
+{% if branch_id: %}
+	&nbsp;
+	<a href="/admin/treemgr/{{branch_id}}/edit" class="btn btn-primary">
+    Edit
+  </a>
+	<a href="/admin/treemgr/viewbranch/{{branch_id}}" class="btn btn-primary">
+		More details..
+ </a>
+{% endif %}
+</h3>
+<hr/>
+{% for leaf in leaves %}
+      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_eng}}</a></p>
+      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_san}}</a></p>
+      <p><a href="/admin/contentmgr/{{leaf.id}}/edit">{{leaf.content_kan}}</a></p>
+{% endfor %}
+<hr/>
+<a href="/admin/contentmgr/add/{{branch_id}}" class="btn btn-success btn-sm">Add content</a>
+
+{% endblock %}

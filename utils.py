@@ -13,25 +13,6 @@ from _private import keys
 import config
 builtin_list = list
 
-def get_model():
-    model_backend = current_app.config['DATA_BACKEND']
-    if model_backend == 'cloudsql':
-        from . import model_cloudsql
-        model = model_cloudsql
-    elif model_backend == 'datastore':
-        import treemgr.model_datastore
-        model = treemgr.model_datastore
-    elif model_backend == 'mongodb':
-        from . import model_mongodb
-        model = model_mongodb
-    else:
-        raise ValueError(
-            "No appropriate databackend configured. "
-            "Please specify datastore, cloudsql, or mongodb")
-
-    return model
-
-
 def get_client():
     return datastore.Client()
 
@@ -111,7 +92,7 @@ def get_languagelist():
 def redirect_admin_only():
 	if current_user.is_authenticated:
 		if current_user.email in keys.ADMIN_LIST:
-			return redirect("/admin/list/")
+			return redirect("/admin")
 		else:
 			return "Sorry! unauthorized user. <a href='/logout'>Login as a different user</a>"
 

@@ -4,12 +4,12 @@ from utils import from_datastore
 from google.cloud import datastore
 
 builtin_list = list
-
+kind_name = 'Branch'
 
 # [START list]
 def list(branch_parent_id):
 	ds = get_client()
-	query = ds.query(kind='Branch', order=['name'])
+	query = ds.query(kind=kind_name, order=['name'])
 	if branch_parent_id != 0:
 		#We have a valid parent # ID
 		#This means we are loading children of a branch
@@ -23,9 +23,6 @@ def list(branch_parent_id):
 		query.add_filter('branch_parent_id', '=', 0)
 
 	entities = query.fetch(limit=10)
-	#print(entities)
-	branch = {}
-	branches = []
 	return entities
 
 # [END list]
@@ -33,18 +30,18 @@ def list(branch_parent_id):
 
 def read(id):
     ds = get_client()
-    key = ds.key('Branch', int(id))
-    branch = ds.get(key)
-    return from_datastore(branch)
+    key = ds.key(kind_name, int(id))
+    rec = ds.get(key)
+    return from_datastore(rec)
 
 
 # [START update]
 def update(data, id=None):
     ds = get_client()
     if id:
-        key = ds.key('Branch', int(id))
+        key = ds.key(kind_name, int(id))
     else:
-        key = ds.key('Branch')
+        key = ds.key(kind_name)
     entity = datastore.Entity(
         key=key,
         exclude_from_indexes=['description'])
@@ -58,7 +55,7 @@ create = update
 
 def add(obj):
 	ds = get_client()
-	key = ds.key('Branch')
+	key = ds.key(kind_name)
 	entity = datastore.Entity(key=key)
 	data = {
 		'id' : obj.id,
@@ -71,5 +68,5 @@ def add(obj):
 
 def delete(id):
     ds = get_client()
-    key = ds.key('Branch', int(id))
+    key = ds.key(kind_name, int(id))
     ds.delete(key)

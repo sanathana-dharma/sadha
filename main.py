@@ -12,6 +12,7 @@ import requests
 from user import User
 import config
 import treemgr
+import contentmgr
 import auth
 import utils
 from utils import render_html
@@ -19,7 +20,7 @@ from utils import render_html
 
 # =========================================================================
 # Flask app setup
-app = Flask(__name__, template_folder="static/templates/")
+app = Flask(__name__, template_folder='static/templates')
 app.config.from_object(config)
 app.secret_key = keys.SECRET_KEY
 app.debug = True
@@ -29,11 +30,13 @@ if not app.testing:
 
 # Register the blueprint.
 from treemgr.routes import mod
-app.register_blueprint(treemgr.routes.mod, url_prefix='/admin')
+app.register_blueprint(treemgr.routes.mod, url_prefix='/admin/treemgr')
 
 from auth.routes import mod2
 app.register_blueprint(auth.routes.mod2, url_prefix='/auth')
 
+from contentmgr.routes import mod3
+app.register_blueprint(contentmgr.routes.mod3, url_prefix='/admin/contentmgr')
 
 # User session management setup
 login_manager = LoginManager()
@@ -51,6 +54,7 @@ def unauthorized():
     return "You must be logged in to access this content.", 403
 
 # =========================================================================
+#Force SSL for all ursl across the site
 @app.before_request
 def before_request():
     if not request.is_secure:
@@ -63,11 +67,14 @@ def before_request():
 def index():
 	return utils.redirect_admin_only()
 
+@app.route("/admin")
+def admin():
+	return redirect("/admin/treemgr/list")
 
 @app.route("/search")
 def search():
 	di = {}
-	return render_html("search.html", di)
+	return render_html("static/templates/search.html", di)
 
 
 # =========================================================================

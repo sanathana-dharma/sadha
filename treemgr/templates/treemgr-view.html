@@ -5,13 +5,18 @@
 <h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;{{branch.name}}
 	&nbsp;&nbsp;
 
-	<a href="/admin/{{branch.id}}/edit" class="btn btn-primary">
+	<a href="/admin/treemgr/{{branch.id}}/edit" class="btn btn-primary">
     Edit
   </a>
-	<a href="/admin/{{branch.id}}/delete" class="btn btn-primary">
+	<a href="/admin/treemgr/{{branch.id}}/delete" class="btn btn-primary">
 		Delete
  </a>
-
+ <a href="/admin/contentmgr/view/{{branch.id}}" class="btn btn-primary">
+	 View content
+</a>
+<a href="/admin/contentmgr/add/{{branch.id}}" class="btn btn-primary">
+	Add content
+</a>
 </h3>
 
 <div class="btn-group">
