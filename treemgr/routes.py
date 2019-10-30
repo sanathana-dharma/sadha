@@ -15,8 +15,8 @@ mod = Blueprint('treemgr', __name__, template_folder='templates')
 
 
 # [START list]
-@mod.route('/list/', defaults={'branch_parent_id': '0'})
-@mod.route('/list/<branch_parent_id>')
+@mod.route('/list/', defaults={'branch_parent_id': '0'}, methods=['GET', 'POST'])
+@mod.route('/list/<branch_parent_id>', methods=['GET', 'POST'])
 @login_required
 def list(branch_parent_id):
 	if branch_parent_id != '0':
@@ -42,7 +42,7 @@ def list(branch_parent_id):
 	return utils.render_html("treemgr-list.html",di)
 # [END list]
 
-@mod.route('/viewbranch/<id>')
+@mod.route('/view/<id>')
 @login_required
 def view(id):
 	branch = model_datastore.read(id)
@@ -108,7 +108,8 @@ def edit(id):
 	if request.method == 'POST':
 		data = request.form.to_dict(flat=True)
 		branch = model_datastore.update(data, id)
-		return redirect(url_for('.view', id=branch['id']))
+		return redirect(url_for('.list', branch_parent_id=id))
+		#return redirect("/admin/treemgr/list/"+id)
 
 	#Send output
 	di = {
