@@ -1,0 +1,37 @@
+{% extends "base-nosidebar.html" %}
+{% block page_content %}
+
+
+<div class="form-row">
+<div class="col-md-2 mb-3">
+</div>
+<div class="col-md-10 mb-3">
+	<h3><a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;Search</h3>
+	<div id="searchbox" style="padding:20px 0px; margin-left:10px;"></div>
+</div>
+
+
+
+<div class="col-md-2 mb-3">
+	<div id="clear-refinements"></div>
+	<br/>
+	<div style="font-weight:bold; margin-bottom:15px;">Filters</div>
+	<div id="refine"></div>
+</div>
+
+<div class="col-md-7 mb-3">
+	<div id="hits"></div>
+	<br/>
+	<div id="pagination"></div>
+</div>
+</div>
+
+
+
+<script src="[[url_for('static', filename='js/algolia.js') ]]" ></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3.35.0/dist/algoliasearchLite.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@3.4.0/dist/instantsearch.production.min.js" ></script>
+<script src="[[url_for('static', filename='js/search.js') ]]"></script>
+
+
+{% endblock %}

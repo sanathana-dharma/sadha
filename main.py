@@ -92,10 +92,10 @@ def index():
 def admin():
 	return redirect("/admin/treemgr/list")
 
-@app.route("/admin/search-test")
+@app.route("/admin/search")
 def searchtest():
 	di = {}
-	return render_html("search.html", di)
+	return render_html("search2.html", di)
 
 
 # =========================================================================

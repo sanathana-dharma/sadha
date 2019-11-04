@@ -14,7 +14,22 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
 }
+/* Custom CSS */
 
+.ais-Hits-item h1 {
+font-size: 14pt;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+.ais-Hits-item, .ais-InfiniteHits-item, .ais-InfiniteResults-item, .ais-Results-item {
+		margin-top: 1rem;
+    margin-left: 1rem;
+    padding: 1rem;
+    width: calc(100%);
+    border: none;
+    box-shadow: none;
+}
+/* ========== */
 .topbar {
   background: #222F3F;
   padding: 10px;

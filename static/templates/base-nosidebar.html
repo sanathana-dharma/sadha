@@ -27,30 +27,35 @@
 </head>
 
 <body>
-							{% include "topbar.html" %}
-							<div class="form-row" style="min-height: 900px;">
 
-								<!-- sidebar content -->
-								<div class="col-md-2 mb-3">
-												<!-- Sidebar -->
-												{% include "sidebar.html" %}
-										    <!-- /#sidebar-wrapper -->
-								</div>
 
-								<!-- page content -->
-								<div class="col-md-10 mb-3">
-												<div class="container-fluid well" style="background-color:#fff">
-													<!-- Breadcrumbs-->
-													{% include "branch-path.html" %}
+  <div class="d-flex" id="wrapper">
 
-													<!-- dynamic page content -->
-													<div class="col-md-10 mb-3">
-														{% block page_content %}{% endblock %}
-													</div>
-												</div>
-								</div>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+			{% include "topbar.html" %}
+
+
+
+				<div id="wrapper">
+					<div id="content-wrapper">
+						<div class="container-fluid">
+							<br />
+
+							<!-- Page Content -->
+							<div class="container-fluid well" style="background-color:#fff">
+									{% block page_content %}{% endblock %}
 							</div>
 
+						</div>
+						<!-- /.container-fluid -->
+
+
+
+					</div>
+					<!-- /.content-wrapper -->
+				</div>
+				<!-- /#wrapper -->
 
 
 <!-- Logout Modal-->
