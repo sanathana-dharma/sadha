@@ -1,34 +1,57 @@
 {% extends "base.html" %}
 {% block page_content %}
 
-{% include "branch-path.html" %}
-<h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;Edit Content
-&nbsp;
-	<a href="/admin/{{branch.id}}/delete" class="btn btn-default btn">
-    <i class="glyphicon glyphicon-trash"></i>
-  </a>
-
-</h3>
-
+<h3><a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;Edit Content</h3>
+<hr />
 <form method="POST" enctype="multipart/form-data">
-<input type="hidden" name="branch_id" value="{{branch_id}}" />
+<input type="hidden" name="branch_id" value="[[branch_id]]" />
 
-  <div class="form-group">
+	<div class="form-group">
+    <label for="author">Master branch: </label>
+		<span style="font-weight:bold;">[[ master_branch_name ]]</span>
+  </div>
+	<div class="form-group">
+    <label for="author">Current Branch: </label>
+		<span style="font-weight:bold;">[[branch_name]]</span>
+  </div>
+
+	<div class="form-group">
+    <label for="content_type_id">Content type</label>
+    <select name="content_type_id" class="form-control">
+			{% for ct in content_type %}
+				<option value="[[ct]]" {% if ct==leaf.content_type_id %} selected="selected"{% endif %}>[[ content_type[ct] ]]</option>
+			{% endfor %}
+		</select>
+  </div>
+
+	<div class="form-group">
+    <label for="source_doc_id">Source Document</label>
+    <select name="source_doc_id" class="form-control">
+			{% for sd in source_docs %}
+				<option value="[[sd]]" {% if sd==leaf.source_doc_id %} selected="selected"{% endif %}>[[ source_docs[sd] ]]</option>
+			{% endfor %}
+		</select>
+  </div>
+
+
+	<div class="form-group">
     <label for="content_eng">Content (English)</label>
-    <textarea name="content_eng" id="content_eng" class="form-control">{{leaf.content_eng}}</textarea>
+    <textarea name="content_eng"  id="content_eng" class="form-control2">[[ leaf.content_eng ]]</textarea>
   </div>
 
 	<div class="form-group">
-    <label for="content_san">Content (Sanskrit)</label>
-    <textarea name="content_san" id="content_san" class="form-control">{{leaf.content_san}}</textarea>
+    <label for="content_san" >Content (Sanskrit)</label>
+    <textarea name="content_san"  id="content_san" class="form-control2">[[ leaf.content_san ]]</textarea>
   </div>
 
 	<div class="form-group">
-    <label for="content_kan">Content (Kannada)</label>
-    <textarea name="content_kan" id="content_kan" class="form-control">{{leaf.content_kan}}</textarea>
+    <label for="content_kan" >Content (Kannada)</label>
+    <textarea name="content_kan" id="content_kan" class="form-control2">[[ leaf.content_kan ]]</textarea>
   </div>
 
-  <button type="submit" class="btn btn-success">Save</button>
+
+  <button type="submit" class="btn btn-success">Save changes</button>
 </form>
 
+	<script src="[[url_for('static', filename='js/contentmgr.js')]]?v=[[ range(1, 9999) | random ]]"></script>
 {% endblock %}

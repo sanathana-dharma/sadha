@@ -21,13 +21,13 @@ class User(UserMixin):
 		for x in results:
 			if not x:
 				return None
-			print("user rec=")
-			print(x)
+			#print("user rec=")
+			#print(x)
 			user = User(
 			    id_=x['userid'], name=x['name'], email=x['email'], profile_pic=x['profile_pic']
 			)
-			print("user obj name=")
-			print(user.name)
+			#print("user obj name=")
+			#print(user.name)
 			return user
 
 	def get_id(self):

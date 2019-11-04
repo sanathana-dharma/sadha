@@ -3,25 +3,27 @@
 
 <h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;Edit Category
 &nbsp;
-	<a href="/admin/treemgr/{{branch.id}}/delete" class="btn btn-default btn">
+	<a href="/admin/treemgr/[[branch.id]]/delete" class="btn btn-default btn">
     <i class="glyphicon glyphicon-trash"></i>
   </a>
 
 </h3>
 
 <form method="POST" enctype="multipart/form-data">
-<input type="hidden" name="branch_parent_id" value="{{branch_parent_id}}" />
-<input type="hidden" name="branch_id" value="{{branch.id}}" />
-  <div class="form-group">
+<input type="hidden" name="branch_parent_id" value="[[branch_parent_id]]" />
+<input type="hidden" name="branch_id" value="[[branch.id]]" />
+
+	<div class="form-row">
+		<div class="col-md-10 mb-3">
     <label for="name">Category Name</label>
-    <input type="text" name="name" id="name" value="{{branch.name}}" class="form-control"/>
+    <input type="text" name="name" id="name" value="[[branch.name]]" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder">Sort order</label>
+			<input type="text" name="sortorder" id="sortorder" value="[[sortorder]]" class="form-control"/>
+		</div>
   </div>
-<!--
-  <div class="form-group">
-    <label for="description">Description (optional)</label>
-    <textarea name="description" id="description" class="form-control">{{branch.description}}</textarea>
-  </div>
--->
+
 
   <button type="submit" class="btn btn-success">Save</button>
 </form>

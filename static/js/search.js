@@ -3,7 +3,7 @@ const algolia_api_key = get_API_Key()
 const searchClient = algoliasearch('SSR6G43F45', algolia_api_key);
 
 const search = instantsearch({
-  indexName: 'SUTRAS',
+  indexName: 'TREE',
   searchClient,
 });
 

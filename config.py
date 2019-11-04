@@ -5,24 +5,37 @@ This file contains all of the configuration values for the application.
 
 import os
 
-# The secret key is used by Flask to encrypt session cookies.
-SECRET_KEY = 'SANATHANA-DHARMA-APP'
 
 PROJECT_ID = 'sanathana-dharma-app'
 
 DATA_BACKEND = 'datastore'
 
-LANGUAGES = {
+DICT_SEARCH_INDEXES = {
+	"TREE": "TREE",
+}
+
+
+DICT_LANGUAGES = {
 	"ENG": "English",
 	"SAN": "Sanskrit",
 	"HIN": "Hindi",
 	"KAN": "Kannada"
 }
 
-ADMIN_LIST = {
-	"kiran@suryakiran.com": "Surya Kiran",
-	"2maxdc@gmail.com": "Carp-Bezverhnii Maxim",
-	"charming30@gmail.com": "Charming Thirty"
+DICT_CONTENT_TYPE = {
+	"10": "Source",
+	"11": "Bhashya",
+	"12": "Vyakhya",
+	"13": "Varthikam",
+	"14": "Tippani"
+}
+
+
+DICT_SOURCEDOCS = {
+	"101": "Source",
+	"102": "Doc1",
+	"103": "Doc2",
+	"104": "Doc3"
 }
 
 #Google oauth credentials

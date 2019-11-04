@@ -1,35 +1,69 @@
 {% extends "base.html" %}
 {% block page_content %}
 
-{% include "branch-path.html" %}
+
 <h3><a href="javascript:history.back(-1);"><span class="glyphicon glyphicon-circle-arrow-left" style="color:grey"></span></a>&nbsp;&nbsp;Add Categories
 
 </h3>
 
 <form method="POST" enctype="multipart/form-data">
-<input type="hidden" name="branch_parent_id" value="{{branch_parent_id}}" />
-  <div class="form-group">
-    <label for="name">Category Name 1</label>
+<input type="hidden" name="branch_parent_id" value="[[branch_parent_id]]" />
+
+  <div class="form-row">
+		<div class="col-md-10 mb-3">
+    <label for="name1">Category Name 1</label>
     <input type="text" name="name1" id="name1" value="" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder1">Sort order</label>
+			<input type="text" name="sortorder1" id="sortorder1" value="[[ next_sortorder ]]" class="form-control"/>
+		</div>
   </div>
-	<div class="form-group">
-    <label for="name">Category Name 2 </label>&nbsp;<small>(optional)</small>
+
+	<div class="form-row">
+		<div class="col-md-10 mb-3">
+    <label for="name2">Category Name 2</label>&nbsp;<small>(optional)</small>
     <input type="text" name="name2" id="name2" value="" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder2">Sort order</label>
+			<input type="text" name="sortorder2" id="sortorder2" value="[[ next_sortorder + 1 ]]" class="form-control"/>
+		</div>
   </div>
-	<div class="form-group">
-    <label for="name">Category Name 3</label>&nbsp;<small>(optional)</small>
+
+	<div class="form-row">
+		<div class="col-md-10 mb-3">
+    <label for="name3">Category Name 3</label>&nbsp;<small>(optional)</small>
     <input type="text" name="name3" id="name3" value="" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder3">Sort order</label>
+			<input type="text" name="sortorder3" id="sortorder3" value="[[ next_sortorder + 2 ]]" class="form-control"/>
+		</div>
   </div>
-	<div class="form-group">
-    <label for="name">Category Name 4</label>&nbsp;<small>(optional)</small>
+
+
+	<div class="form-row">
+		<div class="col-md-10 mb-3">
+    <label for="name4">Category Name 4</label>&nbsp;<small>(optional)</small>
     <input type="text" name="name4" id="name4" value="" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder4">Sort order</label>
+			<input type="text" name="sortorder4" id="sortorder4" value="[[ next_sortorder + 3 ]]" class="form-control"/>
+		</div>
   </div>
-	<div class="form-group">
-    <label for="name">Category Name 5</label>&nbsp;<small>(optional)</small>
+
+	<div class="form-row">
+		<div class="col-md-10 mb-3">
+    <label for="name5">Category Name 5</label>&nbsp;<small>(optional)</small>
     <input type="text" name="name5" id="name5" value="" class="form-control"/>
+		</div>
+		<div class="col-md-2 mb-3">
+			<label for="sortorder5">Sort order</label>
+			<input type="text" name="sortorder5" id="sortorder5" value="[[ next_sortorder + 4 ]]" class="form-control"/>
+		</div>
   </div>
-
-
 
   <button type="submit" class="btn btn-success">Add</button>
 </form>

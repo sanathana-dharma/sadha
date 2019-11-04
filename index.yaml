@@ -2,4 +2,10 @@ indexes:
 - kind: Branch
   properties:
   - name: branch_parent_id
-  - name: name
+  - name: sortorder
+    direction: desc
+
+- kind: Content
+  properties:
+  - name: branch_id
+  - name: content_type_id

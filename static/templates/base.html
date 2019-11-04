@@ -7,11 +7,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Sanathana Dharma</title>
-	<link href="{{url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='css/simple.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="[[url_for('static', filename='css/bootstrap.min.css') ]]" rel="stylesheet" type="text/css">
+  <link href="[[url_for('static', filename='css/simple.css') ]]" rel="stylesheet" type="text/css">
+	<link href="[[url_for('static', filename='css/rtf.css') ]]" rel="stylesheet" type="text/css">
+	<link href="[[url_for('static', filename='css/richtext.min.css') ]]" rel="stylesheet" type="text/css">
+
 	<!-- Bootstrap core JavaScript-->
-  <script src="{{url_for('static', filename='js/jquery.min.js') }} "></script>
-  <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="[[url_for('static', filename='js/jquery.min.js') ]] "></script>
+	<script src="[[url_for('static', filename='js/jquery.richtext.min.js') ]] "></script>
+  <script src="[[url_for('static', filename='js/bootstrap.bundle.min.js') ]]"></script>
+
+
 </head>
 
 <body>
@@ -25,6 +32,9 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
 			{% include "topbar.html" %}
+
+
+
 				<div id="wrapper">
 					<div id="content-wrapper">
 						<div class="container-fluid">
@@ -78,7 +88,7 @@
   <!-- /#wrapper -->
 
 	<!-- Sticky Footer -->
-
+<!--
 	<footer class="footer mt-auto py-3">
 		<div class="container my-auto">
 			<div class="copyright text-center my-auto">
@@ -86,7 +96,7 @@
 			</div>
 		</div>
 	</footer>
-
+-->
 
   <!-- Menu Toggle Script -->
 <!--
@@ -98,6 +108,7 @@
   </script>
 -->
 
+	<script src="[[url_for('static', filename='js/sadha.js')]]?v=[[ range(1, 9999) | random ]]"></script>
 	</body>
 
 	</html>

@@ -4,7 +4,7 @@
 		<a class="breadcrumb-item" href="/admin/treemgr/list/">Home</a>
 		{% for dictItem in branch_path: %}
 		<li style="float:left;">
-		&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<a href="/admin/treemgr/list/{{dictItem['id']}}"> {{dictItem['name']}}</a>
+		&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<a href="/admin/treemgr/list/[[dictItem['id']]]"> [[dictItem['name']]]</a>
 		</li>
 		{% endfor %}
 

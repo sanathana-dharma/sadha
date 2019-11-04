@@ -10,7 +10,7 @@ kind_name = 'Content'
 #Returns list of leaves under a single branch
 def list_leaves(branch_id):
 	ds = get_client()
-	query = ds.query(kind=kind_name)
+	query = ds.query(kind=kind_name, order=['content_type_id'])
 	query.add_filter('branch_id', '=', branch_id)
 	entities = query.fetch(limit=10)
 	return entities
@@ -33,12 +33,20 @@ def read_branch(branch_id):
 
 # [START update]
 #Updates content of a single leaf
-def update(data, leaf_id):
+def update(obj):
 	ds = get_client()
-	key = ds.key(kind_name, int(leaf_id))
+	key = ds.key(kind_name, int(obj.id))
 	entity = datastore.Entity(
 	    key=key,
 	    exclude_from_indexes=['content_eng', 'content_kan', 'content_san'])
+	data = {
+		'branch_id' : obj.branch_id,
+		'content_eng' : obj.content_eng,
+		'content_san' : obj.content_san,
+		'content_kan' : obj.content_kan,
+		'content_type_id' : obj.content_type_id,
+		'source_doc_id' : obj.source_doc_id	
+	}
 	entity.update(data)
 	ds.put(entity)
 	return from_datastore(entity)
@@ -48,12 +56,16 @@ def update(data, leaf_id):
 def add(obj):
 	ds = get_client()
 	key = ds.key(kind_name)
-	entity = datastore.Entity(key=key)
+	entity = datastore.Entity(
+		key=key,
+		exclude_from_indexes=['content_eng', 'content_san', 'content_kan'])
 	data = {
 		'branch_id' : obj.branch_id,
 		'content_eng' : obj.content_eng,
 		'content_san' : obj.content_san,
 		'content_kan' : obj.content_kan,
+		'content_type_id' : obj.content_type_id,
+		'source_doc_id' : obj.source_doc_id
 	}
 	entity.update(data)
 	ds.put(entity)

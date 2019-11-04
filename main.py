@@ -13,14 +13,32 @@ from user import User
 import config
 import treemgr
 import contentmgr
+import search
 import auth
 import utils
 from utils import render_html
 
+#Search related imports
+from _private import keys
+import requests
+from algoliasearch.search_client import SearchClient
+
+
+class CustomFlask(Flask):
+    jinja_options = Flask.jinja_options.copy()
+    jinja_options.update(dict(
+        variable_start_string='[[',  # Default is '{{', I'm changing this because Vue.js uses '{{' / '}}'
+        variable_end_string=']]',
+    ))
+
+
 
 # =========================================================================
 # Flask app setup
-app = Flask(__name__, template_folder='static/templates')
+# Below line replaces  "app = Flask(__name__)"
+app = CustomFlask(__name__, template_folder='static/templates')
+
+
 app.config.from_object(config)
 app.secret_key = keys.SECRET_KEY
 app.debug = True
@@ -37,6 +55,9 @@ app.register_blueprint(auth.routes.mod2, url_prefix='/auth')
 
 from contentmgr.routes import mod3
 app.register_blueprint(contentmgr.routes.mod3, url_prefix='/admin/contentmgr')
+
+from search.routes import mod4
+app.register_blueprint(search.routes.mod4, url_prefix='/admin/search')
 
 # User session management setup
 login_manager = LoginManager()
@@ -71,10 +92,10 @@ def index():
 def admin():
 	return redirect("/admin/treemgr/list")
 
-@app.route("/search")
-def search():
+@app.route("/admin/search-test")
+def searchtest():
 	di = {}
-	return render_html("static/templates/search.html", di)
+	return render_html("search.html", di)
 
 
 # =========================================================================

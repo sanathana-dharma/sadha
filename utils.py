@@ -1,4 +1,4 @@
-from flask import current_app, Flask, redirect, render_template, request, url_for
+from flask import current_app, Flask, redirect, render_template, request, url_for, Markup
 from flask_login import (
     LoginManager,
     current_user,
@@ -12,6 +12,13 @@ from google.cloud import datastore
 from _private import keys
 import config
 builtin_list = list
+
+class Error(Exception):
+	def __init__(self, message):
+		self.message = message
+		print(message)
+	def __str__(self):
+		return repr(self.message)
 
 def get_client():
     return datastore.Client()
@@ -37,36 +44,45 @@ def from_datastore(entity):
 # [Returns the full path of a branch from root as a list of branch IDs]
 def get_tree_path(branch_id):
 	item = {}
-	path = []
+	lstpath = []
 	#print("Get tree path...")
 	#print("branch_id=")
 	#print(branch_id)
 	x = 10
 	#First time, check parent of current node
 	branch_parent_id = branch_id
+	isRootBranch = False
 	while x > 0:
 		ds = get_client()
-		key = ds.key('Branch', int(branch_parent_id))
-		e = ds.get(key)
-		#print (e)
-		item = {
-			"id": e.id,
-			"name": e['name']
-		}
-		#print("name="+e['name'])
-		path.append(item.copy())
-		item.clear()
-		#print("branch_parent_id=")
-		#print(branch_parent_id)
-		branch_parent_id = e['branch_parent_id']
-		#print (path)
-		if branch_parent_id=='0':
-			#print("branch_parent_id=0, breaking loop.")
+		try:
+			key = ds.key('Branch', int(branch_parent_id))
+			e = ds.get(key)
+			#print (e)
+			item = {
+				"id": e.id,
+				"name": e['name']
+			}
+			#print("name="+e['name'])
+			lstpath.append(item.copy())
+			item.clear()
+			#print("branch_parent_id=")
+			#print(branch_parent_id)
+			branch_parent_id = e['branch_parent_id']
+			#print (path)
+			if branch_parent_id=='0':
+				#print("branch_parent_id=0, breaking loop.")
+				break
+		except:
+			isRootBranch = True
 			break
+
 	#print ("Here is the final path:")
 	#Reverse the items in the path
-	path = path[::-1]
-	return path
+	if isRootBranch:
+		return "Home"
+	else:
+		lstpath = lstpath[::-1]
+		return lstpath
 
 #Checks whether a given branch has children under it or not
 #Returns a Boolean
@@ -84,7 +100,26 @@ def get_languagelist():
 	#print("Languages configured:")
 	#for x in config.LANGUAGES:
 		#print(config.LANGUAGES[x])
-	return config.LANGUAGES
+	return config.DICT_LANGUAGES
+
+
+def remove_html_tags(text):
+	"""Remove html tags from a string"""
+	#print(text)
+	#First replace linebreaks to something NON-HTML so that it wont be cleared in the next step.
+	text = text.replace("<br>", "BRBRBR")
+	#print(text)
+
+	import re
+	clean = re.compile('<.*?>')
+	clean  = re.sub(clean, '', text)
+	#print(clean)
+	#Again replace back our linebreaks to HTML format
+	clean = clean.replace("BRBRBR", "<br>")
+	#print(clean)
+	#print("---end---")
+	return Markup(clean)
+
 
 
 #Validates if the current logged in user is authorized to access the given url
@@ -112,6 +147,13 @@ def render_html(htmlFile, dictVariables):
 	#Languages list
 	languages = get_languagelist()
 	dictVariables.update({"languages": languages})
+
+	#Content Type
+	dictVariables.update({"content_type": config.DICT_CONTENT_TYPE})
+
+
+	#Source docs
+	dictVariables.update({"source_docs": config.DICT_SOURCEDOCS})
 
 	#Branch path
 	try:

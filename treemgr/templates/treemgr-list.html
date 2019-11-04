@@ -1,27 +1,48 @@
 {% extends "base.html" %}
 {% block page_content %}
 
-
-<a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
-
-<h3>{% if branch_parent_id: %}<a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;{% endif %}{{catname}}
-{% if branch_parent_id: %}
-	&nbsp;
-	<a href="/admin/treemgr/{{branch_parent_id}}/edit" class="btn btn-primary">
-    Edit
-  </a>
-	<a href="/admin/treemgr/view/{{branch_parent_id}}" class="btn btn-primary">
-		More details..
- </a>
-{% endif %}
+<h3>{% if branch_parent_id: %}<a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;{% endif %}[[catname]]&nbsp;&nbsp;
+	<a href="/admin/contentmgr/view/[[branch_parent_id]]" class="btn btn-sm btn-outline-primary">View Content</a>
+<!--<span><a href="/admin/treemgr/list/[[next_branch_id]]">&rarr;</a></span>-->
+<span style="float:right;">
+		{% if branch_parent_id: %}
+		&nbsp;
+		<a href="/admin/treemgr/[[branch_parent_id]]/edit" class="btn btn-primary">
+	    Edit
+	  </a>
+		<a href="/admin/treemgr/[[branch_parent_id]]/delete" class="btn btn-primary">
+	    Delete
+	  </a>
+		<!--
+		<a href="/admin/contentmgr/view/[[branch_parent_id]]" class="btn btn-primary">
+			View
+	 </a>
+ -->
+	{% endif %}
+</span>
 </h3>
 <hr>
 
-
+<br/>
+<div class="col-md-5 mb-3">
+<h4>Sub categories</h4>
+<br/>
 {% for branch in branches %}
-      <h5><a href="/admin/treemgr/list/{{branch.id}}"> {{branch.name}}</a>  &nbsp; &nbsp;<small><a href="/admin/contentmgr/view/{{branch.id}}">View Content</a></small> </h5>
-			<hr>
+      <h5><a href="/admin/treemgr/list/[[branch.id]]"> [[branch.name]]</a>  &nbsp; &nbsp;<a href="/admin/contentmgr/view/[[branch.id]]" class="btn btn-sm btn-outline-primary">View Content</a> </h5>
 {% endfor %}
-<a href="/admin/treemgr/add/{{branch_parent_id}}" class="btn btn-success btn-sm">Add category here</a>
+<br/>
+<a href="/admin/treemgr/add/[[branch_parent_id]]" class="btn btn-success btn-sm">Add category here</a>
+</div>
 
+
+
+<!--
+<div id="branch_leaves" class="well"></div>
+
+<script>
+	$(document).ready(function() {
+	 $('#branch_leaves').load('/admin/contentmgr/view-div/[[branch_parent_id]]');
+	});
+</script>
+-->
 {% endblock %}

@@ -115,3 +115,4 @@ dmypy.json
 _private/
 _refcode/
 static/js/algolia.js
+sana-env.sh

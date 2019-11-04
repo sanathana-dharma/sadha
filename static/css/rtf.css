@@ -1,0 +1,21 @@
+
+/* box */
+.box-content {
+    padding:20px;
+    background-color: #EFEFEF;
+}
+
+
+textarea {
+    background-color:#FAFAFA;
+    border:#EFEFEF solid 1px;
+    color:#333;
+    height:150px;
+    width:100%;
+}
+
+
+/* richtext custom style */
+.richText {
+	margin-bottom: 40px;
+}

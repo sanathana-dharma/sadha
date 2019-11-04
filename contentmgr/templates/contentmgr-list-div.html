@@ -1,24 +1,8 @@
-{% extends "base.html" %}
-{% block page_content %}
-
-
-<h3>{% if branch_id: %}<a href="javascript:history.back(-1);">&larr;</a>&nbsp;&nbsp;{% endif %}[[catname]]
-	<!--
-{% if branch_id: %}
-	&nbsp;
-	<a href="/admin/treemgr/[[branch_id]]/edit" class="btn btn-primary">
-    Edit branch
-  </a>
-	<a href="/admin/contentmgr/view/[[branch_id]]" class="btn btn-primary">
-		View content
- </a>
-{% endif %}
--->
-</h3>
+<br/>
+<h3>Content</h3>
 <hr/>
 {% for leaf in lstleaves %}
-      <h3>[[leaf.content_type_name]]</h3>
-			<hr>
+			<div class="alert alert-primary bold" role="alert">[[leaf.content_type_name]]</div>
       <p>Source document: [[leaf.source_doc_name]]</p>
 			{% if leaf.content_eng: %}	<p>ENG:<br> [[leaf.content_eng]]</p>	{% endif %}
 			{% if leaf.content_san: %}	<p>SAN:<br> [[leaf.content_san]]</p>	{% endif %}
@@ -29,8 +13,3 @@
 			<hr />
 {% endfor %}
 <a href="/admin/contentmgr/add/[[branch_id]]" class="btn btn-success btn-sm">Add content</a>
-
-
-
-
-{% endblock %}
