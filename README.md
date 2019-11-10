@@ -5,6 +5,8 @@ License
 ===========
 All content and code here is 100% open source based on "The Unlicense" license, which means you can download, use for private or commercial purpose and re-distribute without any kind of copyright or limitations. 
 
+https://en.wikipedia.org/wiki/Unlicense
+
 
 Features 
 ===========
