@@ -143,8 +143,13 @@ def add(branch_id):
 			obj.content_kan = ""
 		else:
 			obj.content_kan = content_kan
-		model_datastore.add(obj)
 
+		#Save object in datastore and ES
+		print("Saving Leaf/content to database...")
+		if obj.create():
+			print("---> Leaf saved!")
+		else:
+			print("---> Saving Leaf failed!!")
 		return redirect(url_for('.list_leaves', branch_id=branch_id))
 
 	#```````````````````````````````````````````````````````````
@@ -189,6 +194,10 @@ def edit(leaf_id):
 		content_eng = request.form['content_eng']
 		content_san = request.form['content_san']
 		content_kan = request.form['content_kan']
+		obj.leaf_id = leaf_id
+		obj.branch_id = branch_id
+		obj.content_type_id = request.form['content_type_id']
+		obj.source_doc_id = request.form['source_doc_id']
 
 		if content_eng=="<div><br></div>":
 			obj.content_eng = ""
@@ -205,7 +214,12 @@ def edit(leaf_id):
 		else:
 			obj.content_kan = content_kan
 
-		obj.update(leaf_id,branch_id,request.form['content_type_id'],request.form['source_doc_id'])
+		#Saving updated object in datastore and ES
+		print("Updating Leaf/content to database...")
+		if obj.update():
+			print("---> Leaf updated!")
+		else:
+			print("---> Updating Leaf failed!!")
 		return redirect(url_for('.list_leaves', branch_id=branch_id))
 
 	#```````````````````````````````````````````````````````````
@@ -245,6 +259,7 @@ def delete(leaf_id):
 	# GET METHOD
 	#```````````````````````````````````````````````````````````
 	leaf = model_datastore.read_leaf(leaf_id)
-	branch_id = leaf['branch_id']
-	model_datastore.delete(leaf_id)
-	return redirect(url_for('.list_leaves', branch_id=branch_id))
+	o = objects.clsLeaf()
+	o.delete(leaf_id)
+
+	return redirect(url_for('.list_leaves', branch_id=leaf['branch_id']))

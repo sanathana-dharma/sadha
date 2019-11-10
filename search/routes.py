@@ -7,13 +7,24 @@ from flask_login import (
     logout_user,
 )
 import utils
-from treemgr import objects
+from treemgr import objects as treemgr_objects
+from search import objects as search_objects
 from treemgr import model_datastore
 
 #Search related imports
 from _private import keys
 import requests
 from algoliasearch.search_client import SearchClient
+
+#Elastic
+from elasticsearch import Elasticsearch
+from datetime import datetime
+from elasticsearch_dsl import Document, Date, Integer, Keyword, Text
+from elasticsearch_dsl.connections import connections
+from elasticsearch_dsl import Q
+import certifi
+from elasticsearch_dsl import connections, Search, Q
+from elasticsearch_dsl.query import Match, MultiMatch
 
 #Register as Blueprint module
 mod4 = Blueprint('search', __name__, template_folder='templates')
@@ -38,3 +49,16 @@ def test_push():
 	#    'https://alg.li/doc-media.json'
 	#)
 	#index.add_objects(posts.json())
+
+
+@mod4.route("/es2")
+def es2():
+
+	return "Added!"
+
+@mod4.route("/esquery")
+def es_query():
+	es = search_objects.clsElasticIndex()
+	q = Q('match', title='world2')
+	return es.execute_query('blog',q)
+	#गच्छति

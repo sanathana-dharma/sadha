@@ -41,6 +41,16 @@ def from_datastore(entity):
     return entity
 # [END from_datastore]
 
+
+# Returns name of the 2nd branch from root, which represents the master branch name
+def get_master_branch_name(branch_id):
+	lstpath = get_tree_path(branch_id)
+	try:
+		master_branch_name = lstpath[2]
+	except:
+		master_branch_name = "Root"
+	return master_branch_name
+
 # [Returns the full path of a branch from root as a list of branch IDs]
 def get_tree_path(branch_id):
 	item = {}

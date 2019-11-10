@@ -1,14 +1,17 @@
 from treemgr import model_datastore
 import utils
 from utils import Error
-from search import objects
+from search import objects as search_objects
 import config
 
-TREE_INDEX_NAME = 'TREE'
+TREE_INDEX_NAME = 'tree'
 
 class clsBranch:
 	def __init__(self):
-		pass
+		self.id = None
+		self.name = None
+		self.branch_parent_id = None
+		self.sortorder = None
 
 	def set(self, name, branch_parent_id, sortorder):
 		self.id = None
@@ -23,27 +26,40 @@ class clsBranch:
 		self.sortorder = branch['sortorder']
 
 	def create(self):
-		#Create the object in database
+		#Save object in Datastore
 		entity = model_datastore.add(self)
 		self.id = entity.id
-		#Add to index (we assume that this object has all the required data)
-		self.add_to_index()
+
+		#Save object in elasticsearch
+		esobj = search_objects.clsElasticIndex()
+		if esobj.create_update_branch(TREE_INDEX_NAME,self):
+			print("Saved branch to Elastic!")
+			return True
+
+		#self.add_to_index()
 		return entity
 
 	def update(self):
 		if self.id:
+			#Update in datastore
 			entity = model_datastore.update(self)
-			#Update data in index
-			self.update_data_in_index()
-			return
+
+			#Update data in Elasticindex
+			esobj = search_objects.clsElasticIndex()
+			if esobj.create_update_branch(TREE_INDEX_NAME,self):
+				print("Updated branch to Elastic!")
+				return True
+			return False
 		else:
 			raise Error("*** clsBranch.update: Error! No valid ID provided for branch update, aborting.")
 
 	def delete(self):
 		if self.id:
+			#Delete data in datastore
 			model_datastore.delete(self)
-			#Delete data in index
-			self.delete_data_in_index()
+			#Delete data in Elastic
+			esobj = search_objects.clsElasticIndex()
+			esobj.delete(TREE_INDEX_NAME, self.id)
 			return
 		else:
 			raise Error("*** clsBranch.delete: Error! No valid ID provided for branch deletion, aborting.")

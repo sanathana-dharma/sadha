@@ -27,6 +27,7 @@ def list(branch_id):
 	#```````````````````````````````````````````````````````````
 	# GET METHOD
 	#```````````````````````````````````````````````````````````
+	isRoot = None
 	if branch_id != '0':
 		#Displaying children of selected category
 		#First fetch all children for this branch
@@ -44,6 +45,7 @@ def list(branch_id):
 		#next_branch_id = next_branch.id
 
 	else:
+		isRoot = True
 		#Displaying root categories
 		catname = "Root categories"
 		branches = model_datastore.list('0')
@@ -51,6 +53,7 @@ def list(branch_id):
 
 	#Send output
 	di = {
+	"isRoot": isRoot,
 	"branches": branches,
 	"catname": catname,
 	"branch_parent_id": branch_id,

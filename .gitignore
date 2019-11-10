@@ -116,3 +116,5 @@ _private/
 _refcode/
 static/js/algolia.js
 sana-env.sh
+search/elastic-examplex.py
+search/objects-old.py

@@ -6,3 +6,4 @@ google-cloud-datastore==1.7.3
 gunicorn==19.9.0
 oauthlib==3.0.1
 algoliasearch==2.1.0
+elasticsearch-dsl>=7.0.0,<8.0.0

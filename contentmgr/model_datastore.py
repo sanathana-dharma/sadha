@@ -35,7 +35,7 @@ def read_branch(branch_id):
 #Updates content of a single leaf
 def update(obj):
 	ds = get_client()
-	key = ds.key(kind_name, int(obj.id))
+	key = ds.key(kind_name, int(obj.leaf_id))
 	entity = datastore.Entity(
 	    key=key,
 	    exclude_from_indexes=['content_eng', 'content_kan', 'content_san'])
@@ -45,7 +45,7 @@ def update(obj):
 		'content_san' : obj.content_san,
 		'content_kan' : obj.content_kan,
 		'content_type_id' : obj.content_type_id,
-		'source_doc_id' : obj.source_doc_id	
+		'source_doc_id' : obj.source_doc_id
 	}
 	entity.update(data)
 	ds.put(entity)
@@ -53,7 +53,7 @@ def update(obj):
 # [END update]
 
 #Creates a new leaf
-def add(obj):
+def create(obj):
 	ds = get_client()
 	key = ds.key(kind_name)
 	entity = datastore.Entity(
@@ -68,8 +68,14 @@ def add(obj):
 		'source_doc_id' : obj.source_doc_id
 	}
 	entity.update(data)
-	ds.put(entity)
-	return from_datastore(entity)
+	try:
+		ds.put(entity)
+		obj.leaf_id = entity.id
+		return obj
+	except Exception as Ex:
+		raise Error("*** model_datastore.create: Error! Unable to write leaf/content to datastore.")
+		print(Ex)
+		return None
 
 #Deletes a leaf
 def delete(leaf_id):

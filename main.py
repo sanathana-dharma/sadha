@@ -6,6 +6,7 @@ from flask_login import (
     current_user
 )
 from _private import keys
+import search
 import requests
 
 # Internal imports
@@ -23,16 +24,18 @@ from _private import keys
 import requests
 from algoliasearch.search_client import SearchClient
 
+#Elastic
+from elasticsearch_dsl import Q
 
+
+
+# Custom flask to override variable character in jinja templates ({ to [ because { is being used by Algolia)
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
     jinja_options.update(dict(
         variable_start_string='[[',  # Default is '{{', I'm changing this because Vue.js uses '{{' / '}}'
         variable_end_string=']]',
     ))
-
-
-
 # =========================================================================
 # Flask app setup
 # Below line replaces  "app = Flask(__name__)"
@@ -96,6 +99,30 @@ def admin():
 def searchtest():
 	di = {}
 	return render_html("search2.html", di)
+
+@app.route("/admin/es")
+def es():
+	es = search.objects.clsSearch()
+	query_index = "blog"
+	'''
+	query_body = Q (
+		{
+		"multi_match": 	{
+							"query": "vedas",
+							"fields": ["name","title"]
+						}
+		}
+	)
+	'''
+	query_body={
+
+   "query":{
+      "match_all":{}
+   }
+}
+	print("Now making first query..here is the result")
+	return es.search(query_index, query_body)
+
 
 
 # =========================================================================
